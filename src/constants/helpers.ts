@@ -24,7 +24,7 @@ export const helpers: Helper[] = [
     interval: 2,
     show: true,
     icon: "./shapes/circle.svg",
-    powerUps: ["2xS", "2xS", "2xS", "3xS"],
+    powerUps: [".05xG", "2xS", "2xS", "3xS"],
   },
   {
     name: "Sensitive Square",

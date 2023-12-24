@@ -1,25 +1,29 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { enemies, boss } from "@/constants/enemy";
-import { hero } from "@/constants/hero";
 import { helpers } from "@/constants/helpers";
 import { nf } from "@/utils/utils";
 import Helpers from "@/components/Helpers";
 import Hero from "@/components/Hero";
 import HelpersField from "@/components/HelpersField";
-import { companions } from "@/constants/companions";
 import Companions from "@/components/Companions";
 import { navCategories } from "@/constants";
+import PlayerStats from "@/components/PlayerStats";
+import AchievementsTracker from "@/components/AchievementsTracker";
 
 export default function Home() {
   const [attack, setAttack] = useState(1);
   const [magic, setMagic] = useState(0);
 
-  const [gold, setGold] = useState(0);
+  const [gold, setGold] = useState(100000);
+  const [crystal, setCrystal] = useState(500);
   const [stage, setStage] = useState(1);
+
+  const [critChance, setCritChance] = useState(5);
+  const [critDamage, setCritDamage] = useState(120);
 
   const [maxEnemyNumber, setMaxEnemyNumber] = useState(10);
   const [currentEnemyNumber, setCurrentEnemyNumber] = useState(1);
@@ -30,6 +34,8 @@ export default function Home() {
 
   const [selectedCategory, setSelectedCategory] = useState("Hero");
 
+  const [goldMultiplier, setGoldMultiplier] = useState(1);
+
   const [helperAnimations, setHelperAnimations] = useState(
     helpers.map(() => false)
   );
@@ -38,11 +44,13 @@ export default function Home() {
 
   const { contextSafe } = useGSAP({ scope: healthBar });
   const healthBarChange = contextSafe(() => {
-    gsap.to(healthBar.current, {
-      width: `${(currentEnemy.health / currentEnemy.maxHealth) * 100}%`,
-      duration: 0.3,
-      ease: "sine",
-    });
+    if (healthBar.current !== null) {
+      gsap.to(healthBar.current, {
+        width: `${(currentEnemy.health / currentEnemy.maxHealth) * 100}%`,
+        duration: 0.3,
+        ease: "sine",
+      });
+    }
   });
 
   const handleClick = () => {
@@ -77,12 +85,12 @@ export default function Home() {
 
     if (currentEnemy.health <= 0) {
       if (currentEnemyType === "boss") {
-        setGold(gold + 1.34 ** stage * 24);
+        setGold(gold + 1.34 ** stage * 24 * goldMultiplier);
         setCurrentEnemyType("normal");
         setCurrentEnemyNumber(1);
         setStage(stage + 1);
       } else {
-        setGold(gold + 1.32 ** stage * 3);
+        setGold(gold + 1.32 ** stage * 3 * goldMultiplier);
         setCurrentEnemyNumber((prev) => {
           const newEnemyNumber = prev + 1;
 
@@ -111,28 +119,36 @@ export default function Home() {
     }
   }, [currentEnemy]);
 
-  const companionUpgrade = () => {};
-
-  setInterval(() => {
-    setMagic((prev) => {
-      let sum = 0;
-      helpers.map((helper) => {
-        sum += helper.magic;
+  useEffect(() => {
+    const updateMagic = setInterval(() => {
+      setMagic((prev) => {
+        let sum = 0;
+        helpers.forEach((helper) => {
+          sum += helper.magic;
+        });
+        return sum;
       });
-      return sum;
-    });
-  }, 100);
+    }, 100);
+
+    return () => {
+      clearInterval(updateMagic);
+    };
+  });
 
   return (
     <main className="flex min-h-screen flex-col items-center p-24">
       <div className="flex gap-24">
         <section className="flex gap-8 category flex-col relative">
+          <div className="absolute -top-12 right-1 text-sm font-semibold">
+            Crystal: {crystal}
+          </div>
+
           <ul>
             {navCategories.map((category) => (
               <li
                 className={`${category.color} ${
                   selectedCategory !== category.name ? "bg-opacity-50" : ""
-                } text-sm font-bold`}
+                } text-sm font-bold cursor: pointer;`}
                 key={category.name}
                 onClick={() => setSelectedCategory(category.name)}
               >
@@ -151,12 +167,32 @@ export default function Home() {
                       setAttack={setAttack}
                       gold={gold}
                       setGold={setGold}
+                      crystal={crystal}
+                      setCrystal={setCrystal}
                     />
                   );
                 case "Helper":
-                  return <Helpers gold={gold} setGold={setGold} />;
+                  return (
+                    <Helpers
+                      gold={gold}
+                      setGold={setGold}
+                      goldMultiplier={goldMultiplier}
+                      setGoldMultiplier={setGoldMultiplier}
+                    />
+                  );
                 case "Companion":
-                  return <Companions companionUpgrade={companionUpgrade} />;
+                  return (
+                    <Companions
+                      gold={gold}
+                      setGold={setGold}
+                      critChance={critChance}
+                      setCritChance={setCritChance}
+                      critDamage={critDamage}
+                      setCritDamage={setCritDamage}
+                      crystal={crystal}
+                      setCrystal={setCrystal}
+                    />
+                  );
                 default:
                   return <></>;
               }
@@ -215,7 +251,17 @@ export default function Home() {
         <div>
           Magic: <span className="text-orange-600">{nf(magic)}</span>
         </div>
+        <PlayerStats
+          goldMultiplier={goldMultiplier}
+          setGoldMultiplier={setGoldMultiplier}
+          critChance={critChance}
+          setCritChance={setCritChance}
+          critDamage={critDamage}
+          setCritDamage={setCritDamage}
+        />
       </section>
+
+      <AchievementsTracker gold={gold} />
     </main>
   );
 }

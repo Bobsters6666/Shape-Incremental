@@ -7,7 +7,7 @@ import Image from "next/image";
 const HelpersField = ({ helperAnimations, handleClick }: any) => {
   return (
     <section>
-      <div className="flex flex-col gap-36 items-end justify-end w-36">
+      <div className="flex flex-col gap-36 items-end justify-end w-48">
         <div className="border-b-2 border-black w-full">1</div>
         <div className="border-b-2 border-black w-full">2</div>
         <div className="border-b-2 border-black w-full flex gap-2">
@@ -17,7 +17,7 @@ const HelpersField = ({ helperAnimations, handleClick }: any) => {
               initial="initial"
               animate={helperAnimations[index] ? "animate" : "initial"}
               key={helper.name}
-              className={`${helper.name}-helper`}
+              className={`${helper.level > 0 ? "block" : "hidden"}`}
             >
               <Image
                 src={helper.icon}

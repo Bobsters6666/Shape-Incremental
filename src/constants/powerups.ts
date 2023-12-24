@@ -16,7 +16,15 @@ export interface MagicPowerUp extends PowerUp {
   magicMultiplier: number;
 }
 
-export type AllPowerUps = AttackPowerUp | ShapePowerUp | MagicPowerUp;
+export interface GoldPowerUp extends PowerUp {
+  goldMultiplier: number;
+}
+
+export type AllPowerUps =
+  | AttackPowerUp
+  | ShapePowerUp
+  | MagicPowerUp
+  | GoldPowerUp;
 
 export const powerUps: Record<string, AllPowerUps> = {
   "2xA": {
@@ -48,5 +56,17 @@ export const powerUps: Record<string, AllPowerUps> = {
     description: "1.05 x Magic from all sources",
     magicMultiplier: 1.05,
     costMultiplier: 2.9,
+  },
+  ".05xG": {
+    name: ".05xG",
+    description: "1.05 x Gold from all sources",
+    goldMultiplier: 1.05,
+    costMultiplier: 2.5,
+  },
+  ".10xG": {
+    name: ".10xG",
+    description: "1.10 x Gold from all sources",
+    goldMultiplier: 1.1,
+    costMultiplier: 2.7,
   },
 };

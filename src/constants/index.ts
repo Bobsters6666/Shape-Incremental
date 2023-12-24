@@ -20,3 +20,18 @@ export const navCategories = [
     color: "bg-orange-200",
   },
 ];
+
+export const heroCategories = [
+  {
+    name: "main",
+    color: "bg-red-300",
+  },
+  {
+    name: "equips",
+    color: "bg-blue-300",
+  },
+  {
+    name: "achievements",
+    color: "bg-green-300",
+  },
+];

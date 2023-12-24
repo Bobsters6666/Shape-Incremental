@@ -1,22 +1,38 @@
 import { Helper, helpers, helpersIntervals } from "@/constants/helpers";
-import { AllPowerUps, ShapePowerUp, powerUps } from "@/constants/powerups";
+import {
+  AllPowerUps,
+  GoldPowerUp,
+  ShapePowerUp,
+  powerUps,
+} from "@/constants/powerups";
 import { nf } from "@/utils/utils";
-import React, { useContext, useRef } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 
 interface HelperProps {
   gold: number;
   setGold: (gold: number) => void;
+  goldMultiplier: number;
+  setGoldMultiplier: (goldMultiplier: number) => void;
 }
 
 type PowerUpKey = keyof typeof powerUps;
 
-const Helpers = ({ gold, setGold }: HelperProps) => {
+const Helpers = ({
+  gold,
+  setGold,
+  goldMultiplier,
+  setGoldMultiplier,
+}: HelperProps) => {
   const upgradeButtonRefs = useRef<Array<HTMLButtonElement | null>>([]);
 
   const levelUpInfoRefs = useRef<Array<HTMLParagraphElement | null>>([]);
 
   function isShapePowerUp(powerUp: AllPowerUps): powerUp is ShapePowerUp {
     return "shapeMultiplier" in powerUp;
+  }
+
+  function isGoldPowerUp(powerUp: AllPowerUps): powerUp is GoldPowerUp {
+    return "goldMultiplier" in powerUp;
   }
 
   const helperUpgrade = (helper: Helper, index: number) => {
@@ -35,10 +51,13 @@ const Helpers = ({ gold, setGold }: HelperProps) => {
 
       if (helpersIntervals.includes(helper.level)) {
         const matchedPowerUp = powerUps[helper.powerUps![index] as PowerUpKey];
+        console.log(matchedPowerUp);
         upgradeButtonRef!.style.backgroundColor = "rgb(253 186 116)";
         helper.cost = helper.cost / matchedPowerUp.costMultiplier;
         if (isShapePowerUp(matchedPowerUp)) {
           helper.magic *= matchedPowerUp.shapeMultiplier;
+        } else if (isGoldPowerUp(matchedPowerUp)) {
+          setGoldMultiplier(goldMultiplier * matchedPowerUp.goldMultiplier);
         }
       }
 
@@ -50,13 +69,30 @@ const Helpers = ({ gold, setGold }: HelperProps) => {
     }
   };
 
+  let hiddenHelpers = helpers.filter((helper) => helper.show === false);
+
+  useEffect(() => {
+    const checkMinimumGoldMet = setInterval(() => {
+      hiddenHelpers.forEach((helper) => {
+        if (gold * 50 > helper.cost) {
+          helper.show = true;
+          hiddenHelpers = helpers.filter((helper) => helper.show === false);
+        }
+      });
+    }, 100);
+
+    return () => clearInterval(checkMinimumGoldMet);
+  });
+
   return (
     <div className="flex flex-col gap-6">
       <h3 className="text-center text-lg font-bold">Helpers</h3>
       {helpers.map((helper: Helper, index: number) => (
         <button
           ref={(el) => (upgradeButtonRefs.current[index] = el)}
-          className="px-4 py-2 bg-orange-300 rounded-md hover:opacity-80"
+          className={`px-4 py-2 bg-orange-300 rounded-md hover:opacity-80 ${
+            helper.show === false ? "hidden" : "inline-block"
+          }`}
           key={helper.name}
           onClick={() => helperUpgrade(helper, index)}
         >

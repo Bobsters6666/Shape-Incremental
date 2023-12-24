@@ -1,23 +1,40 @@
 "use client";
 
 import { nf } from "@/utils/utils";
-import React, { useContext, useRef } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { hero } from "@/constants/hero";
 import { useGameState } from "@/hooks";
 import { AllPowerUps, AttackPowerUp, powerUps } from "@/constants/powerups";
+import { heroCategories } from "@/constants";
+import { achievements } from "@/constants/achievements";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheck, faX } from "@fortawesome/free-solid-svg-icons";
 
 interface HeroProps {
   gold: number;
+  crystal: number;
   attack: number;
   setGold: (gold: number) => void;
-  setAttack: (gold: number) => void;
+  setAttack: (attack: number) => void;
+  setCrystal: (crystal: number) => void;
 }
 
 type PowerUpKey = keyof typeof powerUps;
+type AchievementKey = keyof typeof achievements;
 
-const Hero = ({ gold, attack, setGold, setAttack }: HeroProps) => {
+const Hero = ({
+  gold,
+  crystal,
+  attack,
+  setGold,
+  setCrystal,
+  setAttack,
+}: HeroProps) => {
   const upgradeButtonRef = useRef<HTMLButtonElement>(null);
   const levelUpInfoP = useRef<HTMLParagraphElement>(null);
+
+  const [heroCategory, setHeroCategory] = useState("main");
+  const [achivementPoints, setAchievementPoints] = useState(0);
 
   function isAttackPowerUp(powerUp: AllPowerUps): powerUp is AttackPowerUp {
     return "attackMultiplier" in powerUp;
@@ -55,24 +72,84 @@ const Hero = ({ gold, attack, setGold, setAttack }: HeroProps) => {
   };
 
   return (
-    <div className="flex flex-col gap-6">
-      <div className="absolute top-12 right-0 text-sm font-semibold">
-        Crystal: 0
-      </div>
+    <div className="">
+      <ul className="flex justify-center items-center mb-6">
+        {heroCategories.map((category) => (
+          <li
+            key={category.name}
+            className={`flex-1 text-center ${category.color} ${
+              heroCategory !== category.name ? "bg-opacity-50" : ""
+            }`}
+            onClick={() => setHeroCategory(category.name)}
+          >
+            {category.name}
+          </li>
+        ))}
+      </ul>
+      {(() => {
+        switch (heroCategory) {
+          case "main":
+            return (
+              <div className="flex flex-col gap-6">
+                <h3 className="text-center text-lg font-bold">Hero</h3>
+                <button
+                  ref={upgradeButtonRef}
+                  className="px-4 py-2 bg-orange-300 rounded-md hover:opacity-80"
+                  onClick={heroUpgrade}
+                >
+                  <p>
+                    <strong>Hero</strong>
+                  </p>
+                  <p>Level: {nf(hero.level)}</p>
+                  <p>Cost: {nf(hero.cost)}</p>
+                  <p ref={levelUpInfoP}>Attack: +{nf(hero.attackIncrease)}</p>
+                </button>
+              </div>
+            );
+          case "equips":
+            return (
+              <div>
+                <div>Equips</div>
+              </div>
+            );
+          case "achievements":
+            return (
+              <>
+                <div className="mb-6 text-center font-bold">
+                  Achievement Points: {achivementPoints}
+                </div>
+                <div className="flex flex-col gap-4">
+                  {Object.keys(achievements).map((achievement) => {
+                    const currentAchievement =
+                      achievements[achievement as AchievementKey];
 
-      <h3 className="text-center text-lg font-bold">Hero</h3>
-      <button
-        ref={upgradeButtonRef}
-        className="px-4 py-2 bg-orange-300 rounded-md hover:opacity-80"
-        onClick={heroUpgrade}
-      >
-        <p>
-          <strong>Hero</strong>
-        </p>
-        <p>Level: {nf(hero.level)}</p>
-        <p>Cost: {nf(hero.cost)}</p>
-        <p ref={levelUpInfoP}>Attack: +{nf(hero.attackIncrease)}</p>
-      </button>
+                    return (
+                      <div
+                        key={currentAchievement.name}
+                        className="p-4 bg-orange-300 flex justify-between items-center"
+                      >
+                        <p>{currentAchievement.description}</p>
+                        {currentAchievement.completed ? (
+                          <FontAwesomeIcon
+                            className="text-green-500"
+                            icon={faCheck}
+                          ></FontAwesomeIcon>
+                        ) : (
+                          <FontAwesomeIcon
+                            className="text-red-800"
+                            icon={faX}
+                          ></FontAwesomeIcon>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              </>
+            );
+          default:
+            return <div>Default</div>;
+        }
+      })()}
     </div>
   );
 };
