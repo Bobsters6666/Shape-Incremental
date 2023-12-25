@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { enemies, boss } from "@/constants/enemy";
+import { enemies, boss, enemyAdjectives } from "@/constants/enemy";
 import { helpers } from "@/constants/helpers";
 import { nf } from "@/utils/utils";
 import Helpers from "@/components/Helpers";
@@ -13,13 +13,19 @@ import Companions from "@/components/Companions";
 import { navCategories } from "@/constants";
 import PlayerStats from "@/components/PlayerStats";
 import AchievementsTracker from "@/components/AchievementsTracker";
+import CombatTracker from "@/components/CombatTracker";
+import Saver from "@/components/progress/Saver";
+import Loader from "@/components/progress/Loader";
+import Canvas from "@/components/Canvas";
+import { EnemyShapes } from "@/constants/enemy";
 
 export default function Home() {
   const [attack, setAttack] = useState(1);
   const [magic, setMagic] = useState(0);
 
-  const [gold, setGold] = useState(100000);
-  const [crystal, setCrystal] = useState(500);
+  const [gold, setGold] = useState(10000000);
+  const [crystal, setCrystal] = useState(10);
+  const [achievementPoints, setAchievementPoints] = useState(0);
   const [stage, setStage] = useState(1);
 
   const [critChance, setCritChance] = useState(5);
@@ -29,8 +35,13 @@ export default function Home() {
   const [currentEnemyNumber, setCurrentEnemyNumber] = useState(1);
   const [currentEnemyIndex, setCurrentEnemyIndex] = useState(0);
   const [currentBossIndex, setCurrentBossIndex] = useState(0);
-  const [currentEnemy, setCurrentEnemy] = useState(enemies[currentEnemyIndex]);
   const [currentEnemyType, setCurrentEnemyType] = useState("normal");
+  const [currentEnemyShape, setCurrentEnemyShape] = useState("Ellipse");
+  const [currentEnemy, setCurrentEnemy] = useState(
+    enemies[currentEnemyShape][currentEnemyIndex]
+  );
+
+  const [onEnemyDeath, toggleOnEnemyDeath] = useState(false);
 
   const [selectedCategory, setSelectedCategory] = useState("Hero");
 
@@ -54,70 +65,17 @@ export default function Home() {
   });
 
   const handleClick = () => {
-    setCurrentEnemy((prev) => ({ ...prev, health: prev.health - attack }));
-  };
+    const isCrit = Math.random() * 100 > 100 - critChance;
 
-  useEffect(() => {
-    const intervals = helpers.map((helper, index) => {
-      return setInterval(() => {
-        setCurrentEnemy((prev) => ({
-          ...prev,
-          health: prev.health - helper.magic * helper.interval,
-        }));
-
-        setHelperAnimations(helpers.map(() => false));
-
-        if (helper.level > 0) {
-          setHelperAnimations((prev) =>
-            prev.map((animation, i) => (i === index ? !animation : animation))
-          );
-        }
-      }, helper.interval * 1000);
-    });
-
-    return () => {
-      intervals.forEach((interval) => clearInterval(interval));
-    };
-  }, []);
-
-  useEffect(() => {
-    // console.log(currentEnemy);
-
-    if (currentEnemy.health <= 0) {
-      if (currentEnemyType === "boss") {
-        setGold(gold + 1.34 ** stage * 24 * goldMultiplier);
-        setCurrentEnemyType("normal");
-        setCurrentEnemyNumber(1);
-        setStage(stage + 1);
-      } else {
-        setGold(gold + 1.32 ** stage * 3 * goldMultiplier);
-        setCurrentEnemyNumber((prev) => {
-          const newEnemyNumber = prev + 1;
-
-          if (maxEnemyNumber === newEnemyNumber) {
-            setCurrentEnemy(() => ({
-              ...boss[currentBossIndex],
-              health: 1.405 ** stage * 50,
-              maxHealth: 1.405 ** stage * 50,
-            }));
-            setCurrentEnemyType("boss");
-          } else {
-            setCurrentEnemyIndex((prev) => {
-              const newIndex = (prev + 1) % enemies.length;
-              setCurrentEnemy({
-                ...enemies[newIndex],
-                health: 1.4 ** stage * 10 - 6,
-                maxHealth: 1.4 ** stage * 10 - 6,
-              });
-              return newIndex;
-            });
-          }
-
-          return newEnemyNumber;
-        });
-      }
+    if (isCrit) {
+      setCurrentEnemy((prev) => ({
+        ...prev,
+        health: prev.health - (attack * critDamage) / 100,
+      }));
+    } else {
+      setCurrentEnemy((prev) => ({ ...prev, health: prev.health - attack }));
     }
-  }, [currentEnemy]);
+  };
 
   useEffect(() => {
     const updateMagic = setInterval(() => {
@@ -136,7 +94,7 @@ export default function Home() {
   });
 
   return (
-    <main className="flex min-h-screen flex-col items-center p-24">
+    <main className="flex min-h-screen flex-col items-center p-24 overflow-hidden">
       <div className="flex gap-24">
         <section className="flex gap-8 category flex-col relative">
           <div className="absolute -top-12 right-1 text-sm font-semibold">
@@ -220,27 +178,24 @@ export default function Home() {
               </p>
             </div>
           </div>
-          <div className="">
-            <p className=" mb-4">
-              {currentEnemyNumber === maxEnemyNumber
-                ? boss[currentBossIndex].name
-                : enemies[currentEnemyIndex].name}
-            </p>
-            <Image
-              src={currentEnemy.icon!}
-              alt={currentEnemy.name}
-              width={100}
-              height={100}
-              onClick={handleClick}
-              priority={true}
-              className="w-36 border hover:bg-gray-100 active:bg-gray-200"
-            />
-          </div>
+
+          <Canvas
+            currentEnemy={currentEnemy}
+            currentEnemyNumber={currentEnemyNumber}
+            maxEnemyNumber={maxEnemyNumber}
+            currentEnemyShape={currentEnemyShape}
+            currentEnemyType={currentEnemyType}
+            currentBossIndex={currentBossIndex}
+            onEnemyDeath={onEnemyDeath}
+            handleClick={handleClick}
+          />
         </section>
 
         <HelpersField
           handleClick={handleClick}
           helperAnimations={helperAnimations}
+          setCurrentEnemy={setCurrentEnemy}
+          setHelperAnimations={setHelperAnimations}
         />
       </div>
 
@@ -262,6 +217,62 @@ export default function Home() {
       </section>
 
       <AchievementsTracker gold={gold} />
+      <CombatTracker
+        gold={gold}
+        stage={stage}
+        goldMultiplier={goldMultiplier}
+        currentEnemy={currentEnemy}
+        currentEnemyType={currentEnemyType}
+        maxEnemyNumber={maxEnemyNumber}
+        currentBossIndex={currentBossIndex}
+        currentEnemyShape={currentEnemyShape}
+        setGold={setGold}
+        setCurrentEnemyType={setCurrentEnemyType}
+        setCurrentEnemyNumber={setCurrentEnemyNumber}
+        setStage={setStage}
+        setCurrentEnemy={setCurrentEnemy}
+        setCurrentEnemyIndex={setCurrentEnemyIndex}
+        setCurrentEnemyShape={setCurrentEnemyShape}
+        toggleOnEnemyDeath={toggleOnEnemyDeath}
+      />
+
+      <Saver
+        attack={attack}
+        magic={magic}
+        gold={gold}
+        crystal={crystal}
+        achievementPoints={achievementPoints}
+        stage={stage}
+        critChance={critChance}
+        critDamage={critDamage}
+        goldMultiplier={goldMultiplier}
+        maxEnemyNumber={maxEnemyNumber}
+        currentEnemyNumber={currentEnemyNumber}
+        currentEnemyIndex={currentEnemyIndex}
+        currentEnemy={currentEnemy}
+        currentEnemyType={currentEnemyType}
+        currentBossIndex={currentBossIndex}
+      />
+
+      <Loader
+        setAttack={setAttack}
+        setMagic={setMagic}
+        setGold={setGold}
+        setCrystal={setCrystal}
+        setAchievementPoints={setAchievementPoints}
+        setStage={setStage}
+        setCritChance={setCritChance}
+        setCritDamage={setCritDamage}
+        setGoldMultiplier={setGoldMultiplier}
+        setMaxEnemyNumber={setMaxEnemyNumber}
+        setCurrentEnemyNumber={setCurrentEnemyNumber}
+        setCurrentEnemyIndex={setCurrentEnemyIndex}
+        setCurrentEnemy={setCurrentEnemy}
+        setCurrentEnemyType={setCurrentEnemyType}
+        setCurrentBossIndex={setCurrentBossIndex}
+        currentEnemyType={currentEnemyType}
+        currentEnemyIndex={currentEnemyIndex}
+      />
     </main>
   );
 }

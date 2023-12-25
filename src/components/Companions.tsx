@@ -49,7 +49,7 @@ const Companions = ({
       <h3 className="text-center text-lg font-bold">Companion</h3>
 
       {companions.map((companion) => (
-        <>
+        <div key={companion.name}>
           <Image
             src={companion.icon}
             alt={companion.name}
@@ -83,7 +83,7 @@ const Companions = ({
               </button>
             </div>
           </div>
-        </>
+        </div>
       ))}
     </div>
   );

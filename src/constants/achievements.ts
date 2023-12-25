@@ -1,4 +1,11 @@
-export const achievements = {
+export interface Achievements {
+  name: string;
+  description: string;
+  points: number;
+  completed: boolean;
+}
+
+export const achievements: Record<string, Achievements> = {
   lv10: {
     name: "Level 10!",
     description: "Reach hero level 10",
@@ -12,8 +19,8 @@ export const achievements = {
     completed: false,
   },
   lv100: {
-    name: "Level 101!",
-    description: "Reach hero level 101",
+    name: "Level 100!",
+    description: "Reach hero level 100",
     points: 10,
     completed: false,
   },
@@ -25,7 +32,7 @@ export const achievements = {
   },
   "1mG": {
     name: "Money Money II",
-    description: "Have 1k+ gold in hand",
+    description: "Have 1m+ gold in hand",
     points: 10,
     completed: false,
   },

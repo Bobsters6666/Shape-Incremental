@@ -12,3 +12,18 @@ export const bounce = {
     },
   },
 };
+
+export const popUp = {
+  initial: {
+    y: 100,
+    opacity: 0,
+  },
+  animate: {
+    y: [100, 0, 0, 0, 0, 100],
+    opacity: [0, 1, 1, 1, 1, 0],
+    transition: {
+      duration: 5,
+      ease: "easeInOut", // You can adjust the easing function as needed
+    },
+  },
+};
