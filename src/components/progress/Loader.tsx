@@ -53,7 +53,7 @@ const Loader = ({
       );
     };
 
-    // load();
+    load();
   }, []);
 
   return <></>;
