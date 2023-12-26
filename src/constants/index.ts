@@ -35,3 +35,5 @@ export const heroCategories = [
     color: "bg-green-300",
   },
 ];
+
+export let remainingBossTime = 30;

@@ -27,3 +27,16 @@ export const popUp = {
     },
   },
 };
+
+export const fadeOutCircle = {
+  initial: {
+    opacity: 1,
+  },
+  animate: {
+    opacity: 0,
+    transition: {
+      duration: 0.5,
+      ease: "easeOut",
+    },
+  },
+};

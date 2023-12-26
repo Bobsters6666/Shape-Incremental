@@ -13,13 +13,26 @@ export const hero: Hero = {
   name: "hero",
   level: 0,
   attackIncrease: 1,
-  scaling: 1.12,
+  scaling: 1.13,
   cost: 10,
   costScaling: 1.14,
   intervals: [
     10, 20, 30, 50, 70, 90, 110, 130, 150, 170, 190, 210, 240, 270, 300,
   ],
-  powerUps: ["2xA", "3xA", "2xA", "2xA"],
+  powerUps: [
+    "2xA",
+    "3xA",
+    "2xA",
+    "2xA",
+    "3xA",
+    "3xA",
+    "2xA",
+    "3xA",
+    "2xA",
+    "2xA",
+    "3xA",
+    "3xA",
+  ],
 };
 
 export const abilities = {

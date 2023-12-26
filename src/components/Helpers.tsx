@@ -41,6 +41,7 @@ const Helpers = ({
     const levelUpInfoRef = levelUpInfoRefs.current[index];
 
     if (gold >= helper.cost) {
+      setGold(gold - helper.cost);
       if (helpersIntervals.includes(helper.level + 1)) {
         const matchedPowerUp = powerUps[helper.powerUps![index] as PowerUpKey];
         upgradeButtonRef!.style.backgroundColor = "#fd7860";
@@ -62,7 +63,6 @@ const Helpers = ({
         }
       }
 
-      setGold(gold - helper.cost);
       helper.magic += helper.magicIncrease;
       helper.cost = Math.ceil(helper.cost * helper.costScaling);
       helper.level++;
@@ -86,7 +86,7 @@ const Helpers = ({
   });
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-6 max-h-[600px] overflow-y-scroll pr-4 ">
       <h3 className="text-center text-lg font-bold">Helpers</h3>
       {helpers.map((helper: Helper, index: number) => (
         <button

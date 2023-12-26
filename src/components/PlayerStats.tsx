@@ -37,8 +37,8 @@ const PlayerStats = ({
           </DialogTitle>
           <DialogDescription className="flex flex-col gap-4 text-center">
             <span>Gold Multiplier: {goldMultiplier}</span>
-            <span>Critical Chance: {critChance}%</span>
-            <span>Critical Damage: {critDamage}%</span>
+            <span>Critical Chance: {critChance.toFixed(2)}%</span>
+            <span>Critical Damage: {critDamage.toFixed(2)}%</span>
           </DialogDescription>
         </DialogHeader>
       </DialogContent>

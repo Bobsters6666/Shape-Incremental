@@ -24,7 +24,7 @@ const Canvas = ({
     const canvas = canvasRef.current;
 
     if (canvas) {
-      (canvas.width = 180), (canvas.height = 180);
+      (canvas.width = 220), (canvas.height = 220);
       const context = canvas.getContext("2d");
       if (context) {
         context.clearRect(0, 0, canvas.width, canvas.height);
@@ -32,13 +32,20 @@ const Canvas = ({
 
         if (currentEnemyShape === "Ellipse") {
           context.ellipse(
-            currentEnemy.centerX,
-            currentEnemy.centerY,
+            canvas.width / 2,
+            canvas.height / 2,
             currentEnemy.radiusX,
             currentEnemy.radiusY,
             currentEnemy.rotation,
             0,
             2 * Math.PI
+          );
+        } else if (currentEnemyShape === "Rectangle") {
+          context.rect(
+            (canvas.width - currentEnemy.width) / 2,
+            (canvas.height - currentEnemy.height) / 2,
+            currentEnemy.width,
+            currentEnemy.height
           );
         }
 

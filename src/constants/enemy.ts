@@ -10,8 +10,6 @@ export interface RectangleEnemy extends Enemy {
 }
 
 export interface EllipseEnemy extends Enemy {
-  centerX: number;
-  centerY: number;
   radiusX: number;
   radiusY: number;
   rotation: number;
@@ -29,8 +27,6 @@ export const enemies: EnemyShapes = {
       color: "gray",
       health: 8,
       maxHealth: 8,
-      centerX: 90,
-      centerY: 90,
       radiusX: 60,
       radiusY: 70,
       rotation: 0,
@@ -39,8 +35,6 @@ export const enemies: EnemyShapes = {
       color: "gray",
       health: 8,
       maxHealth: 8,
-      centerX: 90,
-      centerY: 90,
       radiusX: 50,
       radiusY: 30,
       rotation: 120,
@@ -49,8 +43,6 @@ export const enemies: EnemyShapes = {
       color: "gray",
       health: 8,
       maxHealth: 8,
-      centerX: 90,
-      centerY: 90,
       radiusX: 44,
       radiusY: 42,
       rotation: 60,
@@ -59,8 +51,6 @@ export const enemies: EnemyShapes = {
       color: "gray",
       health: 8,
       maxHealth: 8,
-      centerX: 90,
-      centerY: 90,
       radiusX: 41,
       radiusY: 50,
       rotation: 60,
@@ -69,8 +59,6 @@ export const enemies: EnemyShapes = {
       color: "gray",
       health: 8,
       maxHealth: 8,
-      centerX: 90,
-      centerY: 90,
       radiusX: 52,
       radiusY: 28,
       rotation: 60,
@@ -158,8 +146,6 @@ export const boss: EnemyShapes = {
       color: "gray",
       health: 120,
       maxHealth: 120,
-      centerX: 90,
-      centerY: 90,
       radiusX: 85,
       radiusY: 82,
       rotation: 0,
@@ -168,8 +154,6 @@ export const boss: EnemyShapes = {
       color: "gray",
       health: 150,
       maxHealth: 150,
-      centerX: 90,
-      centerY: 90,
       radiusX: 88,
       radiusY: 84,
       rotation: 0,

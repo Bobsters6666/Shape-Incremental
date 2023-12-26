@@ -1,9 +1,6 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
-import Image from "next/image";
-import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
-import { enemies, boss, enemyAdjectives } from "@/constants/enemy";
+import React, { useState, useEffect } from "react";
+import { enemies } from "@/constants/enemy";
 import { helpers } from "@/constants/helpers";
 import { nf } from "@/utils/utils";
 import Helpers from "@/components/Helpers";
@@ -17,7 +14,16 @@ import CombatTracker from "@/components/CombatTracker";
 import Saver from "@/components/progress/Saver";
 import Loader from "@/components/progress/Loader";
 import Canvas from "@/components/Canvas";
-import { EnemyShapes } from "@/constants/enemy";
+import ClickingAnimation from "@/components/ClickingAnimation";
+
+interface Animation {
+  id: number;
+  isCrit: boolean;
+  mousePosition: {
+    x: number;
+    y: number;
+  };
+}
 
 export default function Home() {
   const [attack, setAttack] = useState(1);
@@ -47,24 +53,9 @@ export default function Home() {
 
   const [goldMultiplier, setGoldMultiplier] = useState(1);
 
-  const [helperAnimations, setHelperAnimations] = useState(
-    helpers.map(() => false)
-  );
+  const [activeAnimations, setActiveAnimations] = useState<Animation[]>([]);
 
-  const healthBar = useRef<any>(null);
-
-  const { contextSafe } = useGSAP({ scope: healthBar });
-  const healthBarChange = contextSafe(() => {
-    if (healthBar.current !== null) {
-      gsap.to(healthBar.current, {
-        width: `${(currentEnemy.health / currentEnemy.maxHealth) * 100}%`,
-        duration: 0.3,
-        ease: "sine",
-      });
-    }
-  });
-
-  const handleClick = () => {
+  const handleClick = (event: any) => {
     const isCrit = Math.random() * 100 > 100 - critChance;
 
     if (isCrit) {
@@ -75,6 +66,24 @@ export default function Home() {
     } else {
       setCurrentEnemy((prev) => ({ ...prev, health: prev.health - attack }));
     }
+
+    // Create a new animation object and add it to the array
+    const newAnimation: Animation = {
+      id: Date.now(),
+      isCrit,
+      mousePosition: {
+        x: event.clientX,
+        y: event.clientY,
+      },
+    };
+
+    setActiveAnimations((prevAnimations) => [...prevAnimations, newAnimation]);
+
+    setTimeout(() => {
+      setActiveAnimations((prevAnimations) =>
+        prevAnimations.filter((animation) => animation.id !== newAnimation.id)
+      );
+    }, 500);
   };
 
   useEffect(() => {
@@ -159,25 +168,25 @@ export default function Home() {
         </section>
 
         <section>
-          <div className="mb-4">Stage: {stage}</div>
-          <div className="mb-10">
-            {currentEnemyNumber} / {maxEnemyNumber}
-          </div>
-          <div className="mb-12">Gold: {nf(gold)}</div>
-
-          <div className="w-[160px] relative mb-28">
-            <div className="w-full h-8 absolute bg-red-300"></div>
-            <div
-              ref={healthBar}
-              className={`h-8 bg-red-500 absolute w-full`}
-              onClick={healthBarChange()}
-            ></div>
-            <div className={`absolute w-full font-bold text-white ml-2 mt-1`}>
-              <p>
-                {nf(currentEnemy.health)} / {nf(currentEnemy.maxHealth)}
-              </p>
-            </div>
-          </div>
+          <CombatTracker
+            gold={gold}
+            stage={stage}
+            goldMultiplier={goldMultiplier}
+            currentEnemy={currentEnemy}
+            currentEnemyNumber={currentEnemyNumber}
+            currentEnemyType={currentEnemyType}
+            maxEnemyNumber={maxEnemyNumber}
+            currentBossIndex={currentBossIndex}
+            currentEnemyShape={currentEnemyShape}
+            setGold={setGold}
+            setCurrentEnemyType={setCurrentEnemyType}
+            setCurrentEnemyNumber={setCurrentEnemyNumber}
+            setStage={setStage}
+            setCurrentEnemy={setCurrentEnemy}
+            setCurrentEnemyIndex={setCurrentEnemyIndex}
+            setCurrentEnemyShape={setCurrentEnemyShape}
+            toggleOnEnemyDeath={toggleOnEnemyDeath}
+          />
 
           <Canvas
             currentEnemy={currentEnemy}
@@ -191,12 +200,7 @@ export default function Home() {
           />
         </section>
 
-        <HelpersField
-          handleClick={handleClick}
-          helperAnimations={helperAnimations}
-          setCurrentEnemy={setCurrentEnemy}
-          setHelperAnimations={setHelperAnimations}
-        />
+        <HelpersField setCurrentEnemy={setCurrentEnemy} />
       </div>
 
       <section className="mt-36 font-bold text-lg">
@@ -217,24 +221,6 @@ export default function Home() {
       </section>
 
       <AchievementsTracker gold={gold} />
-      <CombatTracker
-        gold={gold}
-        stage={stage}
-        goldMultiplier={goldMultiplier}
-        currentEnemy={currentEnemy}
-        currentEnemyType={currentEnemyType}
-        maxEnemyNumber={maxEnemyNumber}
-        currentBossIndex={currentBossIndex}
-        currentEnemyShape={currentEnemyShape}
-        setGold={setGold}
-        setCurrentEnemyType={setCurrentEnemyType}
-        setCurrentEnemyNumber={setCurrentEnemyNumber}
-        setStage={setStage}
-        setCurrentEnemy={setCurrentEnemy}
-        setCurrentEnemyIndex={setCurrentEnemyIndex}
-        setCurrentEnemyShape={setCurrentEnemyShape}
-        toggleOnEnemyDeath={toggleOnEnemyDeath}
-      />
 
       <Saver
         attack={attack}
@@ -273,6 +259,17 @@ export default function Home() {
         currentEnemyType={currentEnemyType}
         currentEnemyIndex={currentEnemyIndex}
       />
+
+      {activeAnimations.map((animation) => (
+        <ClickingAnimation
+          key={animation.id}
+          isCrit={animation.isCrit}
+          id={animation.id}
+          mousePosition={animation.mousePosition}
+          attack={attack}
+          critDamage={critDamage}
+        />
+      ))}
     </main>
   );
 }
