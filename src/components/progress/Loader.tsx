@@ -25,6 +25,24 @@ const Loader = ({
 }: any) => {
   useEffect(() => {
     const load = () => {
+      const heroData = localStorage.getItem("hero");
+      const helpersData = localStorage.getItem("helpers");
+      const companionsData = localStorage.getItem("companions");
+      const achievementsData = localStorage.getItem("achievements");
+      const attackData = localStorage.getItem("attack");
+      const magicData = localStorage.getItem("magic");
+
+      if (
+        !heroData ||
+        !helpersData ||
+        companionsData ||
+        achievementsData ||
+        attackData ||
+        magicData
+      ) {
+        return;
+      }
+
       Object.assign(hero, JSON.parse(localStorage.getItem("hero")!));
       Object.assign(helpers, JSON.parse(localStorage.getItem("helpers")!));
       Object.assign(
