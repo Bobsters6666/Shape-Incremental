@@ -1,6 +1,6 @@
 import React from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/utils/authOptions";
 
 const Login = () => {
   const { data: session } = useSession();
