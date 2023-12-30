@@ -52,6 +52,8 @@ export const equipments: Record<EquipmentPieceName, EquipmentPiece[]> = {
   ],
 };
 
+export const ownedEquipments = {};
+
 export const equipped = {
   head: "",
   overall: "",

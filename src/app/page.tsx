@@ -15,6 +15,8 @@ import Saver from "@/components/progress/Saver";
 import Loader from "@/components/progress/Loader";
 import Canvas from "@/components/Canvas";
 import ClickingAnimation from "@/components/ClickingAnimation";
+import Login from "@/components/Login";
+import Link from "next/link";
 
 interface Animation {
   id: number;
@@ -270,6 +272,10 @@ export default function Home() {
           critDamage={critDamage}
         />
       ))}
+      <div className="absolute top-4 right-8 flex gap-4">
+        <Link href="/leaderboard">Leaderboard</Link>
+        <Login />
+      </div>
     </main>
   );
 }
