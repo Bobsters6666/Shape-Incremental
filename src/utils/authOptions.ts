@@ -1,9 +1,9 @@
 import { prisma } from "@/lib/prisma";
-import { NextAuthOptions } from "next-auth";
+import { AuthOptions } from "next-auth";
 
 import GoogleProvider from "next-auth/providers/google";
 
-export const authOptions: NextAuthOptions = {
+export const authOptions: AuthOptions = {
   session: {
     strategy: "jwt",
   },
