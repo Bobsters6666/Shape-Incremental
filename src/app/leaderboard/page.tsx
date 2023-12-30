@@ -23,21 +23,16 @@ export default async function Leaderboard() {
   return (
     <div className="max-w-[1080px] mx-auto">
       {session ? (
-        <>
+        <div>
+          <h3 className="text-2xl font-bold my-16 text-center">
+            Community Leaderboard
+          </h3>
           {users && (
             <div>
               <DataTable columns={columns} data={filteredUsers} />
-              {users.map((user) => {
-                return (
-                  <div key={user.id}>
-                    <div>{user.avatar && <img src={user.avatar} />}</div>
-                    <p>{user.name}</p>
-                  </div>
-                );
-              })}
             </div>
           )}
-        </>
+        </div>
       ) : (
         <div>
           <p>Log in to access community leaderboard</p>

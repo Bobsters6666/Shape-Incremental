@@ -1,11 +1,9 @@
 import { prisma } from "@/lib/prisma";
-import { PrismaClient } from "@prisma/client";
-import { NextAuthOptions } from "next-auth";
+import { AuthOptions } from "next-auth";
 import NextAuth from "next-auth/next";
-import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 
-export const authOptions: NextAuthOptions = {
+const authOptions: AuthOptions = {
   session: {
     strategy: "jwt",
   },
@@ -30,7 +28,7 @@ export const authOptions: NextAuthOptions = {
         },
         create: {
           email: profile.email,
-          name: profile.name,
+          name: profile.name!,
           avatar: profile.picture,
           stage: 0,
           prestige: 0,
@@ -69,4 +67,4 @@ export const authOptions: NextAuthOptions = {
 };
 
 const handler = NextAuth(authOptions);
-export { handler as GET, handler as POST };
+export { handler as GET, handler as POST, authOptions };
