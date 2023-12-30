@@ -29,13 +29,11 @@ export const authOptions: AuthOptions = {
         create: {
           email: profile.email,
           name: profile.name!,
-          avatar: profile.picture,
           stage: 0,
           prestige: 0,
         },
         update: {
           name: profile.name,
-          avatar: profile.picture,
           stage: 0,
           prestige: 0,
         },
@@ -44,15 +42,6 @@ export const authOptions: AuthOptions = {
       return true;
     },
 
-    session: ({ session, token }) => {
-      return {
-        session,
-        user: {
-          ...session.user,
-          id: token.id,
-        },
-      };
-    },
     jwt: ({ token, user }) => {
       if (user) {
         return {

@@ -11,9 +11,8 @@ export default async function Leaderboard() {
   const session = await getServerSession(authOptions);
   const users = await prisma.user.findMany();
 
-  const filteredUsers = users.map(({ name, avatar, stage, prestige }) => ({
+  const filteredUsers = users.map(({ name, stage, prestige }) => ({
     name,
-    avatar,
     stage,
     prestige,
   }));
