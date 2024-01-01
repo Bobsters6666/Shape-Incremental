@@ -8,23 +8,13 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-interface PlayerStatsProps {
-  goldMultiplier: number;
-  setGoldMultiplier: (goldMultiplier: number) => void;
-  critChance: number;
-  setCritChance: (goldMultiplier: number) => void;
-  critDamage: number;
-  setCritDamage: (goldMultiplier: number) => void;
-}
-
 const PlayerStats = ({
   goldMultiplier,
-  setGoldMultiplier,
+  attackMultiplier,
+  magicMultiplier,
   critChance,
-  setCritChance,
   critDamage,
-  setCritDamage,
-}: PlayerStatsProps) => {
+}: any) => {
   return (
     <Dialog>
       <DialogTrigger className="px-3 py-1 bg-zinc-300 mt-4 rounded-[4px] text-[14px] hover:opacity-80">
@@ -36,7 +26,9 @@ const PlayerStats = ({
             Player Stats:
           </DialogTitle>
           <DialogDescription className="flex flex-col gap-4 text-center">
-            <span>Gold Multiplier: {goldMultiplier}</span>
+            <span>Gold Multiplier: {goldMultiplier.toFixed(2)}</span>
+            <span>Attack Multiplier: {attackMultiplier.toFixed(2)}</span>
+            <span>Magic Multiplier: {magicMultiplier.toFixed(2)}</span>
             <span>Critical Chance: {critChance.toFixed(2)}%</span>
             <span>Critical Damage: {critDamage.toFixed(2)}%</span>
           </DialogDescription>

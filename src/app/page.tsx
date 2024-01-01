@@ -4,7 +4,7 @@ import { enemies } from "@/constants/enemy";
 import { helpers } from "@/constants/helpers";
 import { nf } from "@/utils/utils";
 import Helpers from "@/components/Helpers";
-import Hero from "@/components/Hero";
+import Hero from "@/components/hero/Hero";
 import HelpersField from "@/components/HelpersField";
 import Companions from "@/components/Companions";
 import { navCategories } from "@/constants";
@@ -17,6 +17,10 @@ import Canvas from "@/components/Canvas";
 import ClickingAnimation from "@/components/ClickingAnimation";
 import Login from "@/components/Login";
 import Link from "next/link";
+import Artifacts from "@/components/Artifacts";
+import { Button } from "@/components/ui/button";
+import Shop from "@/components/Shop";
+import Prestige from "@/components/progress/Prestige";
 
 interface Animation {
   id: number;
@@ -31,13 +35,16 @@ export default function Home() {
   const [attack, setAttack] = useState(1);
   const [magic, setMagic] = useState(0);
 
-  const [gold, setGold] = useState(10000000);
+  const [gold, setGold] = useState(1);
   const [crystal, setCrystal] = useState(10);
+  const [angel, setAngel] = useState(0);
   const [achievementPoints, setAchievementPoints] = useState(0);
   const [stage, setStage] = useState(1);
 
   const [critChance, setCritChance] = useState(5);
   const [critDamage, setCritDamage] = useState(120);
+
+  const [prestige, setPrestige] = useState(0);
 
   const [maxEnemyNumber, setMaxEnemyNumber] = useState(10);
   const [currentEnemyNumber, setCurrentEnemyNumber] = useState(1);
@@ -54,6 +61,8 @@ export default function Home() {
   const [selectedCategory, setSelectedCategory] = useState("Hero");
 
   const [goldMultiplier, setGoldMultiplier] = useState(1);
+  const [attackMultiplier, setAttackMultiplier] = useState(1);
+  const [magicMultiplier, setMagicMultiplier] = useState(1);
 
   const [activeAnimations, setActiveAnimations] = useState<Animation[]>([]);
 
@@ -63,10 +72,13 @@ export default function Home() {
     if (isCrit) {
       setCurrentEnemy((prev) => ({
         ...prev,
-        health: prev.health - (attack * critDamage) / 100,
+        health: prev.health - ((attack * critDamage) / 100) * attackMultiplier,
       }));
     } else {
-      setCurrentEnemy((prev) => ({ ...prev, health: prev.health - attack }));
+      setCurrentEnemy((prev) => ({
+        ...prev,
+        health: prev.health - attack * attackMultiplier,
+      }));
     }
 
     // Create a new animation object and add it to the array
@@ -95,7 +107,7 @@ export default function Home() {
         helpers.forEach((helper) => {
           sum += helper.magic;
         });
-        return sum;
+        return sum * magicMultiplier;
       });
     }, 100);
 
@@ -162,6 +174,18 @@ export default function Home() {
                       setCrystal={setCrystal}
                     />
                   );
+                case "Artifact":
+                  return (
+                    <Artifacts
+                      angel={angel}
+                      setAngel={setAngel}
+                      setAttackMultiplier={setAttackMultiplier}
+                      setMagicMultiplier={setMagicMultiplier}
+                      setGoldMultiplier={setGoldMultiplier}
+                    />
+                  );
+                case "Shop":
+                  return <Shop />;
                 default:
                   return <></>;
               }
@@ -207,18 +231,33 @@ export default function Home() {
 
       <section className="mt-36 font-bold text-lg">
         <div>
-          Attack: <span className="text-orange-600">{nf(attack)}</span>
+          Attack:{" "}
+          <span className="text-orange-600">
+            {nf(attack * attackMultiplier)}
+          </span>
         </div>
         <div>
           Magic: <span className="text-orange-600">{nf(magic)}</span>
         </div>
         <PlayerStats
           goldMultiplier={goldMultiplier}
-          setGoldMultiplier={setGoldMultiplier}
+          attackMultiplier={attackMultiplier}
+          magicMultiplier={magicMultiplier}
           critChance={critChance}
-          setCritChance={setCritChance}
           critDamage={critDamage}
+        />
+        <Prestige
+          setAttack={setAttack}
+          setMagic={setMagic}
+          setGold={setGold}
+          setAngel={setAngel}
+          stage={stage}
+          setStage={setStage}
+          setCritChance={setCritChance}
           setCritDamage={setCritDamage}
+          setPrestige={setPrestige}
+          setCurrentEnemy={setCurrentEnemy}
+          setCurrentEnemyNumber={setCurrentEnemyNumber}
         />
       </section>
 
@@ -229,11 +268,15 @@ export default function Home() {
         magic={magic}
         gold={gold}
         crystal={crystal}
+        angels={angel}
         achievementPoints={achievementPoints}
         stage={stage}
+        prestige={prestige}
         critChance={critChance}
         critDamage={critDamage}
         goldMultiplier={goldMultiplier}
+        attackMultiplier={attackMultiplier}
+        magicMultiplier={magicMultiplier}
         maxEnemyNumber={maxEnemyNumber}
         currentEnemyNumber={currentEnemyNumber}
         currentEnemyIndex={currentEnemyIndex}
@@ -249,6 +292,7 @@ export default function Home() {
         setCrystal={setCrystal}
         setAchievementPoints={setAchievementPoints}
         setStage={setStage}
+        setPrestige={setPrestige}
         setCritChance={setCritChance}
         setCritDamage={setCritDamage}
         setGoldMultiplier={setGoldMultiplier}
@@ -269,11 +313,14 @@ export default function Home() {
           id={animation.id}
           mousePosition={animation.mousePosition}
           attack={attack}
+          attackMultiplier={attackMultiplier}
           critDamage={critDamage}
         />
       ))}
       <div className="absolute top-4 right-8 flex gap-4">
-        <Link href="/leaderboard">Leaderboard</Link>
+        <Button asChild>
+          <Link href="/leaderboard">Leaderboard</Link>
+        </Button>
         <Login />
       </div>
     </main>

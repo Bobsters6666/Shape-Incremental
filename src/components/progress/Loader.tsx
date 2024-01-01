@@ -3,6 +3,8 @@ import { hero } from "@/constants/hero";
 import { helpers } from "@/constants/helpers";
 import { companions } from "@/constants/companions";
 import { achievements } from "@/constants/achievements";
+import { artifacts, newArtifact } from "@/constants/artifacts";
+import { equipped, ownedEquipments } from "@/constants/equipment";
 
 const Loader = ({
   setAttack,
@@ -11,6 +13,7 @@ const Loader = ({
   setCrystal,
   setAchievementPoints,
   setStage,
+  setPrestige,
   setCritChance,
   setCritDamage,
   setGoldMultiplier,
@@ -35,10 +38,10 @@ const Loader = ({
       if (
         !heroData ||
         !helpersData ||
-        companionsData ||
-        achievementsData ||
-        attackData ||
-        magicData
+        !companionsData ||
+        !achievementsData ||
+        !attackData ||
+        !magicData
       ) {
         return;
       }
@@ -53,6 +56,16 @@ const Loader = ({
         achievements,
         JSON.parse(localStorage.getItem("achievements")!)
       );
+      Object.assign(artifacts, JSON.parse(localStorage.getItem("artifacts")!));
+      Object.assign(
+        newArtifact,
+        JSON.parse(localStorage.getItem("newArtifact")!)
+      );
+      Object.assign(
+        ownedEquipments,
+        JSON.parse(localStorage.getItem("ownedEquipments")!)
+      );
+      Object.assign(equipped, JSON.parse(localStorage.getItem("equipped")!));
       setAttack(parseFloat(localStorage.getItem("attack")!));
       setMagic(parseFloat(localStorage.getItem("magic")!));
       setGold(parseFloat(localStorage.getItem("gold")!));
@@ -61,11 +74,15 @@ const Loader = ({
         parseFloat(localStorage.getItem("achievementPoints")!)
       );
       setStage(parseFloat(localStorage.getItem("stage")!));
+      setPrestige(parseFloat(localStorage.getItem("prestige")!));
       setCritChance(parseFloat(localStorage.getItem("critChance")!));
       setCritDamage(parseFloat(localStorage.getItem("critDamage")!));
       setGoldMultiplier(parseFloat(localStorage.getItem("goldMultiplier")!));
       setMaxEnemyNumber(parseFloat(localStorage.getItem("maxEnemyNumber")!));
       setCurrentEnemyType(localStorage.getItem("currentEnemyType"));
+      setCurrentEnemyNumber(
+        parseFloat(localStorage.getItem("currentEnemyNumber")!)
+      );
       setCurrentBossIndex(
         parseFloat(localStorage.getItem("currentBossIndex")!)
       );

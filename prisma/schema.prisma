@@ -17,6 +17,22 @@ model User {
   name String
   stage Int
   prestige Int
+  attack Int
+  magic Int
+  gold Int
+  crystal Int
+  angel Int
+  achievementPoints Int
+  critChance Int
+  critDamage Int
+  goldMultiplier Int
+  attackMultiplier Int
+  magicMultiplier Int
+  maxEnemyNumber Int
+  hero Json?
+  helpers Json?
+  companions Json?
+  achievements Json?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

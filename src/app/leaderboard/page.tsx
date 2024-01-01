@@ -6,6 +6,7 @@ import { getServerSession } from "next-auth";
 import Image from "next/image";
 import { DataTable } from "@/app/leaderboard/DataTable";
 import { Leaderboard, columns } from "./columns";
+import { Button } from "@/components/ui/button";
 
 export default async function Leaderboard() {
   const session = await getServerSession(authOptions);
@@ -16,8 +17,6 @@ export default async function Leaderboard() {
     stage,
     prestige,
   }));
-
-  console.log(filteredUsers);
 
   return (
     <div className="max-w-[1080px] mx-auto">
@@ -35,7 +34,9 @@ export default async function Leaderboard() {
       ) : (
         <div>
           <p>Log in to access community leaderboard</p>
-          <Link href="/api/auth/signin">Log in</Link>
+          <Button>
+            <Link href="/api/auth/signin">Log in</Link>
+          </Button>
         </div>
       )}
     </div>

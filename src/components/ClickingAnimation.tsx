@@ -9,6 +9,7 @@ const ClickingAnimation = ({
   id,
   attack,
   critDamage,
+  attackMultiplier,
 }: any) => {
   return (
     <div
@@ -23,10 +24,12 @@ const ClickingAnimation = ({
       <motion.div variants={fadeOutCircle} initial="initial" animate="animate">
         {isCrit ? (
           <p className="text-orange-700 text-lg">
-            -{nf((attack * critDamage) / 100)}
+            -{nf((attack * critDamage * attackMultiplier) / 100)}
           </p>
         ) : (
-          <p className="text-orange-400 text-md">-{nf(attack)}</p>
+          <p className="text-orange-400 text-md">
+            -{nf(attack * attackMultiplier)}
+          </p>
         )}
       </motion.div>
     </div>

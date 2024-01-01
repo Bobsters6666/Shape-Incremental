@@ -1,5 +1,4 @@
 import { Helper, helpers, helpersIntervals } from "@/constants/helpers";
-import { hero } from "@/constants/hero";
 import {
   AllPowerUps,
   GoldPowerUp,

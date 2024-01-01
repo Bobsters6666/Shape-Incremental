@@ -4,6 +4,10 @@ interface EquipmentPiece {
   scaled: number;
 }
 
+interface EquippedPiece extends EquipmentPiece {
+  equipped: boolean;
+}
+
 type EquipmentPieceName = "head" | "overall" | "weapon" | "secondary" | "foot";
 
 export const equipments: Record<EquipmentPieceName, EquipmentPiece[]> = {
@@ -52,14 +56,22 @@ export const equipments: Record<EquipmentPieceName, EquipmentPiece[]> = {
   ],
 };
 
-export const ownedEquipments = {};
+export const ownedEquipments: Record<EquipmentPieceName, EquippedPiece[]> = {
+  head: [{ name: "Basic Helmet", base: 1.1, scaled: 0, equipped: true }],
+  overall: [{ name: "Basic Overall", base: 1.1, scaled: 0, equipped: true }],
+  weapon: [{ name: "Basic Weapon", base: 1.1, scaled: 0, equipped: true }],
+  secondary: [
+    { name: "Basic Secondary", base: 1.1, scaled: 0, equipped: true },
+  ],
+  foot: [{ name: "Basic Boot", base: 1.1, scaled: 0, equipped: true }],
+};
 
 export const equipped = {
-  head: "",
-  overall: "",
-  weapon: "",
-  secondary: "",
-  foot: "",
+  head: { name: "Basic Helmet", base: 1.1, scaled: 0, equipped: true },
+  overall: { name: "Basic Overall", base: 1.1, scaled: 0, equipped: true },
+  weapon: { name: "Basic Weapon", base: 1.1, scaled: 0, equipped: true },
+  secondary: { name: "Basic Seconday", base: 1.1, scaled: 0, equipped: true },
+  foot: { name: "Basic Boot", base: 1.1, scaled: 0, equipped: true },
 };
 
 const equipmentsInfo = {

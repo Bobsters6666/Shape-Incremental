@@ -69,6 +69,70 @@ const AchievementsTracker = ({ gold }: AchievementsTrackerProps) => {
           setVisibleAchievement(null);
         }, 5000);
       }
+
+      if (hero.level >= 100 && !achievements.lv100.completed) {
+        achievements.lv100.completed = true;
+        setVisibleAchievement("lv100");
+        setTimeout(() => {
+          setVisibleAchievement(null);
+        }, 5000);
+      }
+
+      if (hero.level >= 250 && !achievements.lv250.completed) {
+        achievements.lv250.completed = true;
+        setVisibleAchievement("lv250");
+        setTimeout(() => {
+          setVisibleAchievement(null);
+        }, 5000);
+      }
+
+      if (hero.level >= 500 && !achievements.lv500.completed) {
+        achievements.lv500.completed = true;
+        setVisibleAchievement("lv500");
+        setTimeout(() => {
+          setVisibleAchievement(null);
+        }, 5000);
+      }
+
+      if (hero.level >= 1000 && !achievements.lv1000.completed) {
+        achievements.lv1000.completed = true;
+        setVisibleAchievement("lv1000");
+        setTimeout(() => {
+          setVisibleAchievement(null);
+        }, 5000);
+      }
+
+      if (gold >= 1000 && !achievements["1kG"].completed) {
+        achievements["1kG"].completed = true;
+        setVisibleAchievement("1kG");
+        setTimeout(() => {
+          setVisibleAchievement(null);
+        }, 5000);
+      }
+
+      if (gold >= 1000000 && !achievements["1mG"].completed) {
+        achievements["1mG"].completed = true;
+        setVisibleAchievement("1mG");
+        setTimeout(() => {
+          setVisibleAchievement(null);
+        }, 5000);
+      }
+
+      if (gold >= 1000000000 && !achievements["1bG"].completed) {
+        achievements["1bG"].completed = true;
+        setVisibleAchievement("1bG");
+        setTimeout(() => {
+          setVisibleAchievement(null);
+        }, 5000);
+      }
+
+      if (gold >= 1_000_000_000_000 && !achievements["1tG"].completed) {
+        achievements["1tG"].completed = true;
+        setVisibleAchievement("1tG");
+        setTimeout(() => {
+          setVisibleAchievement(null);
+        }, 5000);
+      }
     }, 500);
 
     return () => clearInterval(interval);
