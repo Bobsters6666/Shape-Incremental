@@ -123,7 +123,7 @@ const CombatTracker = ({
 
             ownedEquipments[equipType].push(randomEquip);
 
-            setCurrentEquipmentIndex((prev: number) => prev + 1);
+            setCurrentEquipmentIndex((prev: number) => (prev + 1) % 5);
           }
         } else nextEnemy();
       } else {
