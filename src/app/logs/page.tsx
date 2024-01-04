@@ -6,7 +6,15 @@ const page = () => {
   return (
     <div className="max-w-[1080px] mx-auto mt-8">
       <h2 className="text-3xl font-bold underline">Logs</h2>
-      <div></div>
+      <div>
+        <h3 className="text-xl font-bold mt-12 mb-4">v1.01</h3>
+        <ul className="flex flex-col gap-2">
+          <li className="">Can now equip different equipments</li>
+          <li>Different equipments provides different bonuses</li>
+          <li>Boss now drops equipments every 5 stages</li>
+          <li>Added shiny enemies</li>
+        </ul>
+      </div>
       <div>
         <Button variant={"link"}>
           <Link href="/">Back</Link>

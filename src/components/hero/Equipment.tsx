@@ -37,11 +37,11 @@ const Equipment = ({
       setGoldMultiplier((prev: number) => prev / prevEquipPower);
       setGoldMultiplier((prev: number) => prev * equipped[equipType].scaled);
     } else if (equipType === "overall") {
-      setAttackMultiplier((prev: number) => prev / prevEquipPower);
-      setAttackMultiplier((prev: number) => prev * equipped[equipType].scaled);
-    } else if (equipType === "weapon") {
       setShinyChance((prev: number) => prev / prevEquipPower);
       setShinyChance((prev: number) => prev * equipped[equipType].scaled);
+    } else if (equipType === "weapon") {
+      setAttackMultiplier((prev: number) => prev / prevEquipPower);
+      setAttackMultiplier((prev: number) => prev * equipped[equipType].scaled);
     } else if (equipType === "secondary") {
       setMagicMultiplier((prev: number) => prev / prevEquipPower);
       setMagicMultiplier((prev: number) => prev * equipped[equipType].scaled);
