@@ -53,7 +53,7 @@ export default function Home() {
   const [currentEnemyIndex, setCurrentEnemyIndex] = useState(0);
   const [currentBossIndex, setCurrentBossIndex] = useState(0);
   const [currentEnemyType, setCurrentEnemyType] = useState("normal");
-  const [currentEnemyShape, setCurrentEnemyShape] = useState("Triangle");
+  const [currentEnemyShape, setCurrentEnemyShape] = useState("Ellipse");
   const [currentEnemy, setCurrentEnemy] = useState(
     enemies[currentEnemyShape][currentEnemyIndex]
   );
