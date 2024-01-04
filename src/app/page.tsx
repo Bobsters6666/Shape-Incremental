@@ -34,10 +34,10 @@ interface Animation {
 }
 
 export default function Home() {
-  const [attack, setAttack] = useState(100);
+  const [attack, setAttack] = useState(1);
   const [magic, setMagic] = useState(0);
 
-  const [gold, setGold] = useState(100000);
+  const [gold, setGold] = useState(1);
   const [crystal, setCrystal] = useState(10);
   const [angel, setAngel] = useState(0);
   const [achievementPoints, setAchievementPoints] = useState(0);
