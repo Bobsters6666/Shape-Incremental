@@ -1,4 +1,4 @@
-import { EllipseEnemy, boss, enemyAdjectives } from "@/constants/enemy";
+import { enemyAdjectives } from "@/constants/enemy";
 import React, { useEffect, useRef, useState } from "react";
 
 const Canvas = ({
@@ -10,6 +10,7 @@ const Canvas = ({
   currentBossIndex,
   onEnemyDeath,
   handleClick,
+  isEnemyShiny,
 }: any) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
@@ -28,7 +29,9 @@ const Canvas = ({
       const context = canvas.getContext("2d");
       if (context) {
         context.clearRect(0, 0, canvas.width, canvas.height);
-        context.fillStyle = "rgb(215, 212, 218)";
+
+        if (isEnemyShiny) context.fillStyle = "rgb(128, 255, 0)";
+        else context.fillStyle = "rgb(215, 212, 218)";
 
         if (currentEnemyShape === "Ellipse") {
           context.ellipse(
@@ -47,6 +50,12 @@ const Canvas = ({
             currentEnemy.width,
             currentEnemy.height
           );
+        } else if (currentEnemyShape === "Triangle") {
+          context.beginPath();
+          context.moveTo(currentEnemy.x1, currentEnemy.y1);
+          context.lineTo(currentEnemy.x2, currentEnemy.y2);
+          context.lineTo(currentEnemy.x3, currentEnemy.y3);
+          context.closePath();
         }
 
         context.fill();

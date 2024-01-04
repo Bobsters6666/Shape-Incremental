@@ -8,6 +8,7 @@ export interface Helper {
   costScaling: number;
   interval: number;
   show: boolean;
+  notified: boolean;
   icon: string;
   powerUps?: string[];
 }
@@ -23,6 +24,7 @@ export const helpers: Helper[] = [
     costScaling: 1.138,
     interval: 2,
     show: true,
+    notified: false,
     icon: "./shapes/companions/asset.svg",
     powerUps: ["2xS", "2xS", "2xS", "3xS", ".05xG", ".05xM", "3xS", "3xS"],
   },
@@ -36,6 +38,7 @@ export const helpers: Helper[] = [
     costScaling: 1.138,
     interval: 2.5,
     show: false,
+    notified: false,
     icon: "./shapes/companions/asset1.svg",
     powerUps: ["2xS", "2xS", "3xS", "3xS", "2xS", "3xS", "2xS", "4xS"],
   },
@@ -49,6 +52,7 @@ export const helpers: Helper[] = [
     costScaling: 1.138,
     interval: 2.8,
     show: false,
+    notified: false,
     icon: "./shapes/companions/asset2.svg",
     powerUps: ["2xS", ".05xG", "3xS", "3xS", "10xG", "2xS", "3xS", "4xS"],
   },
@@ -62,6 +66,7 @@ export const helpers: Helper[] = [
     costScaling: 1.138,
     interval: 3,
     show: false,
+    notified: false,
     icon: "./shapes/companions/asset3.svg",
     powerUps: ["2xS", "2xS", "3xS", "3xS", "3xS", "10xG", ".05xM", "3xS"],
   },
@@ -75,6 +80,7 @@ export const helpers: Helper[] = [
     costScaling: 1.138,
     interval: 2.4,
     show: false,
+    notified: false,
     icon: "./shapes/companions/asset4.svg",
     powerUps: [".05xM", "10xM", "3xS", "4xS", "2xS", ".10xG", ".05xG", "4xS"],
   },
@@ -88,6 +94,7 @@ export const helpers: Helper[] = [
     costScaling: 1.138,
     interval: 2.3,
     show: false,
+    notified: false,
     icon: "./shapes/companions/asset5.svg",
     powerUps: ["3xS", "2xS", ".05xG", ".10xM", "4xS", "3xS", "2xS", "4xS"],
   },
@@ -101,6 +108,7 @@ export const helpers: Helper[] = [
     costScaling: 1.138,
     interval: 2.7,
     show: false,
+    notified: false,
     icon: "./shapes/companions/asset6.svg",
     powerUps: ["2xS", "2xS", "3xS", "3xS"],
   },
@@ -114,6 +122,7 @@ export const helpers: Helper[] = [
     costScaling: 1.138,
     interval: 3,
     show: false,
+    notified: false,
     icon: "./shapes/companions/asset7.svg",
     powerUps: ["2xS", "2xS", "3xS", "3xS"],
   },
@@ -127,6 +136,7 @@ export const helpers: Helper[] = [
     costScaling: 1.138,
     interval: 2.6,
     show: false,
+    notified: false,
     icon: "./shapes/companions/asset8.svg",
     powerUps: ["2xS", "2xS", "3xS", "3xS"],
   },
@@ -140,6 +150,7 @@ export const helpers: Helper[] = [
     costScaling: 1.138,
     interval: 2.75,
     show: false,
+    notified: false,
     icon: "./shapes/companions/asset9.svg",
     powerUps: ["2xS", "2xS", "3xS", "3xS"],
   },

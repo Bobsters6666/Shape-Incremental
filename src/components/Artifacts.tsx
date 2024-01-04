@@ -60,7 +60,7 @@ const Artifacts = ({
   );
 
   return (
-    <div className="flex flex-col gap-6 max-h-[600px] overflow-y-scroll pr-4">
+    <div className="flex flex-col gap-6 max-h-[600px] overflow-y-auto pr-4">
       <h3 className="text-center font-semibold">Angels: {nf(angel)}</h3>
       <div
         className={`px-4 py-2 bg-orange-500 text-white rounded-md hover:opacity-80 max-w-[300px] text-center`}

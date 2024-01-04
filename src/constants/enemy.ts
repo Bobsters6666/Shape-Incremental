@@ -15,7 +15,16 @@ export interface EllipseEnemy extends Enemy {
   rotation: number;
 }
 
-export type AllEnemies = RectangleEnemy | EllipseEnemy;
+export interface TriangleEnemy extends Enemy {
+  x1: number;
+  y1: number;
+  x2: number;
+  y2: number;
+  x3: number;
+  y3: number;
+}
+
+export type AllEnemies = RectangleEnemy | EllipseEnemy | TriangleEnemy | Enemy;
 
 export type EnemyShapes = {
   [key: string]: AllEnemies[];
@@ -87,6 +96,52 @@ export const enemies: EnemyShapes = {
       height: 150,
     },
   ],
+  Triangle: [
+    {
+      color: "gray",
+      health: 8,
+      maxHealth: 8,
+      x1: 53,
+      y1: 46,
+      x2: 183,
+      y2: 38,
+      x3: 150,
+      y3: 152,
+    },
+    {
+      color: "gray",
+      health: 8,
+      maxHealth: 8,
+      x1: 113,
+      y1: 62,
+      x2: 52,
+      y2: 170,
+      x3: 160,
+      y3: 142,
+    },
+    // {
+    //   color: "gray",
+    //   health: 8,
+    //   maxHealth: 8,
+    //   x1: 53,
+    //   y1: 46,
+    //   x2: 183,
+    //   y2: 38,
+    //   x3: 150,
+    //   y3: 152,
+    // },
+    // {
+    //   color: "gray",
+    //   health: 8,
+    //   maxHealth: 8,
+    //   x1: 53,
+    //   y1: 46,
+    //   x2: 183,
+    //   y2: 38,
+    //   x3: 150,
+    //   y3: 152,
+    // },
+  ],
 };
 
 export type EnemyAdjectives = {
@@ -138,6 +193,28 @@ export const enemyAdjectives: EnemyAdjectives = {
     "Relevant",
     "Resplendent",
   ],
+  Triangle: [
+    "Triumphant",
+    "Tranquil",
+    "Tenacious",
+    "Turbulent",
+    "Tessellated",
+    "Transcendent",
+    "Tantalizing",
+    "Tectonic",
+    "Timely",
+    "Tintinnabulating",
+    "Turbulent",
+    "Talented",
+    "Thriving",
+    "Tactile",
+    "Tremendous",
+    "Transitory",
+    "Thematic",
+    "Thrilling",
+    "Translucent",
+    "Tribal",
+  ],
 };
 
 export const boss: EnemyShapes = {
@@ -173,6 +250,30 @@ export const boss: EnemyShapes = {
       maxHealth: 150,
       width: 100,
       height: 150,
+    },
+  ],
+  Triangle: [
+    {
+      color: "gray",
+      health: 120,
+      maxHealth: 120,
+      x1: 113,
+      y1: 26,
+      x2: 16,
+      y2: 160,
+      x3: 196,
+      y3: 203,
+    },
+    {
+      color: "gray",
+      health: 150,
+      maxHealth: 150,
+      x1: 113,
+      y1: 26,
+      x2: 204,
+      y2: 160,
+      x3: 24,
+      y3: 203,
     },
   ],
 };

@@ -3,10 +3,11 @@ import Link from "next/link";
 import React from "react";
 import { authOptions } from "@/utils/authOptions";
 import { getServerSession } from "next-auth";
-import Image from "next/image";
 import { DataTable } from "@/app/leaderboard/DataTable";
 import { Leaderboard, columns } from "./columns";
 import { Button } from "@/components/ui/button";
+import { getCookie } from "cookies-next";
+import { cookies } from "next/headers";
 
 export default async function Leaderboard() {
   const session = await getServerSession(authOptions);
@@ -17,6 +18,18 @@ export default async function Leaderboard() {
     stage,
     prestige,
   }));
+
+  if (session) {
+    const user = await prisma.user.update({
+      where: {
+        email: session.user?.email!,
+      },
+      data: {
+        stage: parseFloat(getCookie("stage", { cookies })!),
+        prestige: parseFloat(getCookie("prestige", { cookies })!),
+      },
+    });
+  }
 
   return (
     <div className="max-w-[1080px] mx-auto">
@@ -30,12 +43,18 @@ export default async function Leaderboard() {
               <DataTable columns={columns} data={filteredUsers} />
             </div>
           )}
+          <Button variant={"link"} className="mt-4">
+            <Link href="/">Back</Link>
+          </Button>
         </div>
       ) : (
         <div>
           <p>Log in to access community leaderboard</p>
           <Button>
             <Link href="/api/auth/signin">Log in</Link>
+          </Button>
+          <Button variant={"link"}>
+            <Link href="/">Back</Link>
           </Button>
         </div>
       )}

@@ -4,10 +4,19 @@ import { boss } from "@/constants/enemy";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { nf } from "@/utils/utils";
+import {
+  EquipmentPieceName,
+  equipments,
+  ownedEquipments,
+} from "@/constants/equipment";
+
+type EquipmentKey = keyof typeof equipments;
 
 const CombatTracker = ({
   gold,
   stage,
+  shinyChance,
+  isEnemyShiny,
   goldMultiplier,
   currentEnemy,
   currentEnemyNumber,
@@ -16,6 +25,8 @@ const CombatTracker = ({
   currentBossIndex,
   currentEnemyShape,
   setGold,
+  setCrystal,
+  setIsEnemyShiny,
   setCurrentEnemyType,
   setCurrentEnemyNumber,
   setStage,
@@ -28,6 +39,9 @@ const CombatTracker = ({
   const bossTimerRef = useRef<HTMLDivElement | null>(null);
   const [remainingBossTime, setRemainingBossTime] = useState(30);
   const [isTraining, setIsTraining] = useState(false);
+
+  const equipmentKeys = ["head", "overall", "weapon", "seconday", "shoes"];
+  const [currentEquipmentIndex, setCurrentEquipmentIndex] = useState(0);
 
   const { contextSafe: healthBarContextSafe } = useGSAP({ scope: healthBar });
   const { contextSafe: bossTimerContextSafe } = useGSAP({
@@ -66,7 +80,6 @@ const CombatTracker = ({
     });
   };
 
-  useEffect(() => {});
   const setNextEnemyBoss = () => {
     setCurrentEnemy(() => ({
       ...boss[currentEnemyShape][currentBossIndex],
@@ -87,16 +100,40 @@ const CombatTracker = ({
           setCurrentEnemyType("normal");
           setCurrentEnemyNumber(1);
           setStage(stage + 1);
+          setCrystal((prev: number) => prev + Math.ceil(Math.random() * 3));
 
           // if shape swap intervals reached => swap to next shape
           if (parseFloat(stage) % 5 === 0) {
             const newIndex =
               (shapes.indexOf(currentEnemyShape) + 1) % shapes.length;
             setCurrentEnemyShape(shapes[newIndex]);
+
+            // boss equip drop
+            const equipType = equipmentKeys[
+              currentEquipmentIndex
+            ] as EquipmentPieceName;
+
+            const randomEquip =
+              equipments[equipType][
+                Math.floor(Math.random() * equipments[equipType].length)
+              ];
+
+            randomEquip.scaled =
+              randomEquip.base * (1 + randomEquip.scaled / 60);
+
+            ownedEquipments[equipType].push(randomEquip);
+
+            setCurrentEquipmentIndex((prev: number) => prev + 1);
           }
         } else nextEnemy();
       } else {
-        setGold(gold + 1.33 ** stage * 3 * goldMultiplier);
+        if (isEnemyShiny) {
+          setGold(gold + 1.34 ** stage * 12 * goldMultiplier);
+          setIsEnemyShiny(false);
+        } else {
+          setGold(gold + 1.33 ** stage * 3 * goldMultiplier);
+        }
+
         setCurrentEnemyNumber((prev: number) => {
           const newEnemyNumber = prev + 1;
 
@@ -104,8 +141,14 @@ const CombatTracker = ({
           if (maxEnemyNumber === newEnemyNumber) {
             setNextEnemyBoss();
             setCurrentEnemyType("boss");
-          } else nextEnemy();
+          }
 
+          // set next enemy shiny
+          else if (Math.random() * 100 < shinyChance) {
+            setIsEnemyShiny(true);
+          }
+
+          nextEnemy();
           return newEnemyNumber;
         });
       }

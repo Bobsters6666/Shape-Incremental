@@ -1,4 +1,5 @@
 import { Helper, helpers, helpersIntervals } from "@/constants/helpers";
+import { notifications } from "@/constants/notifications";
 import {
   AllPowerUps,
   GoldPowerUp,
@@ -84,8 +85,12 @@ const Helpers = ({
     return () => clearInterval(checkMinimumGoldMet);
   });
 
+  for (let i = notifications.length; i >= 0; i--) {
+    if (notifications[i] === "Helper") notifications.splice(i);
+  }
+
   return (
-    <div className="flex flex-col gap-6 max-h-[600px] overflow-y-scroll pr-4 ">
+    <div className="flex flex-col gap-6 max-h-[600px] overflow-y-auto pr-4 ">
       <h3 className="text-center text-lg font-bold">Helpers</h3>
       {helpers.map((helper: Helper, index: number) => (
         <button

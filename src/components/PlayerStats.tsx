@@ -14,6 +14,7 @@ const PlayerStats = ({
   magicMultiplier,
   critChance,
   critDamage,
+  shinyChance,
 }: any) => {
   return (
     <Dialog>
@@ -25,12 +26,25 @@ const PlayerStats = ({
           <DialogTitle className="mb-10 text-lg text-center">
             Player Stats:
           </DialogTitle>
-          <DialogDescription className="flex flex-col gap-4 text-center">
-            <span>Gold Multiplier: {goldMultiplier.toFixed(2)}</span>
-            <span>Attack Multiplier: {attackMultiplier.toFixed(2)}</span>
-            <span>Magic Multiplier: {magicMultiplier.toFixed(2)}</span>
-            <span>Critical Chance: {critChance.toFixed(2)}%</span>
-            <span>Critical Damage: {critDamage.toFixed(2)}%</span>
+          <DialogDescription className="flex flex-col gap-4 text-center ">
+            <span>
+              Gold Multiplier: <strong>{goldMultiplier.toFixed(2)}</strong>
+            </span>
+            <span>
+              Attack Multiplier: <strong>{attackMultiplier.toFixed(2)}</strong>
+            </span>
+            <span>
+              Magic Multiplier: <strong>{magicMultiplier.toFixed(2)}</strong>
+            </span>
+            <span>
+              Shiny Chance: <strong>{shinyChance.toFixed(2)}%</strong>
+            </span>
+            <span>
+              Critical Chance: <strong>{critChance.toFixed(2)}%</strong>
+            </span>
+            <span>
+              Critical Damage: <strong>{critDamage.toFixed(2)}%</strong>
+            </span>
           </DialogDescription>
         </DialogHeader>
       </DialogContent>

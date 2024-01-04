@@ -13,9 +13,15 @@ interface HeroProps {
   gold: number;
   crystal: number;
   attack: number;
+  stage: number;
   setGold: (gold: number) => void;
   setAttack: (attack: number) => void;
   setCrystal: (crystal: number) => void;
+  setGoldMultiplier: (GoldMultiplier: number) => void;
+  setAttackMultiplier: (AttackMultiplier: number) => void;
+  setMagicMultiplier: (MagicMultiplier: number) => void;
+  setGemMultiplier: (GemMultiplier: number) => void;
+  setShinyChance: (ShinyChance: number) => void;
 }
 
 type PowerUpKey = keyof typeof powerUps;
@@ -24,9 +30,15 @@ const Hero = ({
   gold,
   crystal,
   attack,
+  stage,
   setGold,
   setCrystal,
   setAttack,
+  setGoldMultiplier,
+  setAttackMultiplier,
+  setMagicMultiplier,
+  setGemMultiplier,
+  setShinyChance,
 }: HeroProps) => {
   const upgradeButtonRef = useRef<HTMLButtonElement>(null);
   const levelUpInfoP = useRef<HTMLParagraphElement>(null);
@@ -108,7 +120,14 @@ const Hero = ({
           case "equips":
             return (
               <>
-                <Equipment />
+                <Equipment
+                  stage={stage}
+                  setGoldMultiplier={setGoldMultiplier}
+                  setAttackMultiplier={setAttackMultiplier}
+                  setMagicMultiplier={setMagicMultiplier}
+                  setGemMultiplier={setGemMultiplier}
+                  setShinyChance={setShinyChance}
+                />
               </>
             );
           case "achievements":

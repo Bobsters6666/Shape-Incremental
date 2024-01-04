@@ -6,6 +6,7 @@ import { achievements } from "@/constants/achievements";
 import { useSession } from "next-auth/react";
 import { artifacts, newArtifact } from "@/constants/artifacts";
 import { equipped, ownedEquipments } from "@/constants/equipment";
+import { setCookie, getCookie } from "cookies-next";
 
 const Saver = ({
   attack,
@@ -68,6 +69,9 @@ const Saver = ({
         JSON.stringify(ownedEquipments)
       );
       localStorage.setItem("defaultEquipped", JSON.stringify(equipped));
+
+      setCookie("stage", stage);
+      setCookie("prestige", prestige);
     }, 500);
 
     return () => clearInterval(interval);

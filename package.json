@@ -19,6 +19,7 @@
     "@tanstack/react-table": "^8.11.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
+    "cookies-next": "^4.1.0",
     "framer-motion": "^10.16.16",
     "gsap": "^3.12.4",
     "lucide-react": "^0.300.0",

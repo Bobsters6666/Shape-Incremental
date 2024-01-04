@@ -21,6 +21,8 @@ import Artifacts from "@/components/Artifacts";
 import { Button } from "@/components/ui/button";
 import Shop from "@/components/Shop";
 import Prestige from "@/components/progress/Prestige";
+import { Notification, PushNotification } from "@/components/Notification";
+import { notifications } from "@/constants/notifications";
 
 interface Animation {
   id: number;
@@ -32,10 +34,10 @@ interface Animation {
 }
 
 export default function Home() {
-  const [attack, setAttack] = useState(1);
+  const [attack, setAttack] = useState(100);
   const [magic, setMagic] = useState(0);
 
-  const [gold, setGold] = useState(1);
+  const [gold, setGold] = useState(100000);
   const [crystal, setCrystal] = useState(10);
   const [angel, setAngel] = useState(0);
   const [achievementPoints, setAchievementPoints] = useState(0);
@@ -51,7 +53,7 @@ export default function Home() {
   const [currentEnemyIndex, setCurrentEnemyIndex] = useState(0);
   const [currentBossIndex, setCurrentBossIndex] = useState(0);
   const [currentEnemyType, setCurrentEnemyType] = useState("normal");
-  const [currentEnemyShape, setCurrentEnemyShape] = useState("Ellipse");
+  const [currentEnemyShape, setCurrentEnemyShape] = useState("Triangle");
   const [currentEnemy, setCurrentEnemy] = useState(
     enemies[currentEnemyShape][currentEnemyIndex]
   );
@@ -63,6 +65,10 @@ export default function Home() {
   const [goldMultiplier, setGoldMultiplier] = useState(1);
   const [attackMultiplier, setAttackMultiplier] = useState(1);
   const [magicMultiplier, setMagicMultiplier] = useState(1);
+  const [gemMultipler, setGemMultiplier] = useState(1);
+
+  const [shinyChance, setShinyChance] = useState(2);
+  const [isEnemyShiny, setIsEnemyShiny] = useState(false);
 
   const [activeAnimations, setActiveAnimations] = useState<Animation[]>([]);
 
@@ -129,11 +135,18 @@ export default function Home() {
               <li
                 className={`${category.color} ${
                   selectedCategory !== category.name ? "bg-opacity-50" : ""
-                } text-sm font-bold cursor: pointer;`}
+                } text-sm font-bold cursor-pointer relative`}
                 key={category.name}
                 onClick={() => setSelectedCategory(category.name)}
               >
                 {category.name}
+                <PushNotification
+                  type={category.name}
+                  name={category.name}
+                  categoryNotifications={notifications.filter(
+                    (n) => n === category.name
+                  )}
+                />
               </li>
             ))}
           </ul>
@@ -147,9 +160,15 @@ export default function Home() {
                       attack={attack}
                       setAttack={setAttack}
                       gold={gold}
+                      stage={stage}
                       setGold={setGold}
                       crystal={crystal}
                       setCrystal={setCrystal}
+                      setGoldMultiplier={setGoldMultiplier}
+                      setAttackMultiplier={setAttackMultiplier}
+                      setMagicMultiplier={setMagicMultiplier}
+                      setGemMultiplier={setGemMultiplier}
+                      setShinyChance={setShinyChance}
                     />
                   );
                 case "Helper":
@@ -198,6 +217,8 @@ export default function Home() {
             gold={gold}
             stage={stage}
             goldMultiplier={goldMultiplier}
+            shinyChance={shinyChance}
+            isEnemyShiny={isEnemyShiny}
             currentEnemy={currentEnemy}
             currentEnemyNumber={currentEnemyNumber}
             currentEnemyType={currentEnemyType}
@@ -205,6 +226,8 @@ export default function Home() {
             currentBossIndex={currentBossIndex}
             currentEnemyShape={currentEnemyShape}
             setGold={setGold}
+            setCrystal={setCrystal}
+            setIsEnemyShiny={setIsEnemyShiny}
             setCurrentEnemyType={setCurrentEnemyType}
             setCurrentEnemyNumber={setCurrentEnemyNumber}
             setStage={setStage}
@@ -223,6 +246,7 @@ export default function Home() {
             currentBossIndex={currentBossIndex}
             onEnemyDeath={onEnemyDeath}
             handleClick={handleClick}
+            isEnemyShiny={isEnemyShiny}
           />
         </section>
 
@@ -245,6 +269,7 @@ export default function Home() {
           magicMultiplier={magicMultiplier}
           critChance={critChance}
           critDamage={critDamage}
+          shinyChance={shinyChance}
         />
         <Prestige
           setAttack={setAttack}
@@ -306,6 +331,8 @@ export default function Home() {
         currentEnemyIndex={currentEnemyIndex}
       />
 
+      <Notification gold={gold} />
+
       {activeAnimations.map((animation) => (
         <ClickingAnimation
           key={animation.id}
@@ -318,7 +345,10 @@ export default function Home() {
         />
       ))}
       <div className="absolute top-4 right-8 flex gap-4">
-        <Button asChild>
+        <Button variant={"link"} className="text-black">
+          <Link href="/logs">Logs</Link>
+        </Button>
+        <Button>
           <Link href="/leaderboard">Leaderboard</Link>
         </Button>
         <Login />
