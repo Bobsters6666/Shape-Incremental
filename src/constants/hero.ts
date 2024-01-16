@@ -35,9 +35,18 @@ export const hero: Hero = {
   ],
 };
 
-export const abilities = {
+export interface Ability {
+  cost: number;
+  description: string;
+  scaling: number;
+}
+
+export type AbilityKey = "hand of gold";
+
+export const abilities: Record<string, Ability> = {
   "hand of gold": {
     cost: 100,
-    description: "Instantly gain 30 minutes worth of gold",
+    description: "Gain a massive amount of gold instantly",
+    scaling: 1.38,
   },
 };

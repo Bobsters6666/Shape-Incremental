@@ -12,6 +12,7 @@ const PlayerStats = ({
   goldMultiplier,
   attackMultiplier,
   magicMultiplier,
+  gemMultiplier,
   critChance,
   critDamage,
   shinyChance,
@@ -35,6 +36,9 @@ const PlayerStats = ({
             </span>
             <span>
               Magic Multiplier: <strong>{magicMultiplier.toFixed(2)}</strong>
+            </span>
+            <span>
+              Gem Multiplier: <strong>{gemMultiplier.toFixed(2)}</strong>
             </span>
             <span>
               Shiny Chance: <strong>{shinyChance.toFixed(2)}%</strong>

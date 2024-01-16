@@ -37,7 +37,7 @@ export default function Home() {
   const [attack, setAttack] = useState(1);
   const [magic, setMagic] = useState(0);
 
-  const [gold, setGold] = useState(1);
+  const [gold, setGold] = useState(10000);
   const [crystal, setCrystal] = useState(10);
   const [angel, setAngel] = useState(0);
   const [achievementPoints, setAchievementPoints] = useState(0);
@@ -48,7 +48,7 @@ export default function Home() {
 
   const [prestige, setPrestige] = useState(0);
 
-  const [maxEnemyNumber, setMaxEnemyNumber] = useState(10);
+  const [maxEnemyNumber, setMaxEnemyNumber] = useState(5);
   const [currentEnemyNumber, setCurrentEnemyNumber] = useState(1);
   const [currentEnemyIndex, setCurrentEnemyIndex] = useState(0);
   const [currentBossIndex, setCurrentBossIndex] = useState(0);
@@ -124,7 +124,7 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen flex-col items-center p-24 overflow-hidden">
-      <div className="flex gap-24">
+      <div className="flex gap-24 mt-12">
         <section className="flex gap-8 category flex-col relative">
           <div className="absolute -top-12 right-1 text-sm font-semibold">
             Crystal: {crystal}
@@ -141,7 +141,6 @@ export default function Home() {
               >
                 {category.name}
                 <PushNotification
-                  type={category.name}
                   name={category.name}
                   categoryNotifications={notifications.filter(
                     (n) => n === category.name
@@ -161,6 +160,7 @@ export default function Home() {
                       setAttack={setAttack}
                       gold={gold}
                       stage={stage}
+                      goldMultiplier={goldMultiplier}
                       setGold={setGold}
                       crystal={crystal}
                       setCrystal={setCrystal}
@@ -178,6 +178,10 @@ export default function Home() {
                       setGold={setGold}
                       goldMultiplier={goldMultiplier}
                       setGoldMultiplier={setGoldMultiplier}
+                      attackMultiplier={attackMultiplier}
+                      setAttackMultiplier={setAttackMultiplier}
+                      magicMultiplier={magicMultiplier}
+                      setMagicMultiplier={setMagicMultiplier}
                     />
                   );
                 case "Companion":
@@ -267,6 +271,7 @@ export default function Home() {
           goldMultiplier={goldMultiplier}
           attackMultiplier={attackMultiplier}
           magicMultiplier={magicMultiplier}
+          gemMultiplier={gemMultipler}
           critChance={critChance}
           critDamage={critDamage}
           shinyChance={shinyChance}

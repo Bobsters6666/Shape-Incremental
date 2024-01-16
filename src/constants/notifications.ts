@@ -1,3 +1,3 @@
-type validNotificationTypes = "Helper" | "b";
+type validNotificationTypes = "Helper" | "Equip" | "head";
 
 export const notifications: validNotificationTypes[] = [];

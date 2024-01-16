@@ -14,14 +14,14 @@ import { Button } from "../ui/button";
 
 type AchievementKey = keyof typeof achievements;
 
-const Achievements = ({ achivementPoints }: any) => {
+const Achievements = ({ achivementPoints, setAchievementPoints }: any) => {
   return (
     <>
       <div className="mb-6 text-center font-bold">
         Achievement Points: {achivementPoints}
       </div>
       <Dialog>
-        <DialogTrigger className="mb-4">
+        <DialogTrigger className="mb-4" asChild>
           <Button>Points Shop</Button>
         </DialogTrigger>
         <DialogContent className="bg-white">

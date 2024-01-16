@@ -3,13 +3,11 @@ import { notifications } from "@/constants/notifications";
 import React, { useEffect } from "react";
 
 interface notificationProps {
-  type: string;
   name: string;
   categoryNotifications: any;
 }
 
 const PushNotification = ({
-  type,
   name,
   categoryNotifications,
 }: notificationProps) => {

@@ -49,7 +49,7 @@ const HelpersField = ({ setCurrentEnemy }: any) => {
       <Dialog>
         <div className="flex flex-col gap-36 items-end justify-end w-48 mt-40">
           <div className="border-b-2 border-black w-full"></div>
-          <div className="border-b-2 border-black w-full">
+          <div className="border-b-2 border-black w-full flex gap-2">
             {helpers.slice(6, 11).map((helper, index) => (
               <motion.div
                 variants={bounce}

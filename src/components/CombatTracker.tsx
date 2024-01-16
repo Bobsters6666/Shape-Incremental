@@ -9,8 +9,7 @@ import {
   equipments,
   ownedEquipments,
 } from "@/constants/equipment";
-
-type EquipmentKey = keyof typeof equipments;
+import Popup from "./Popup";
 
 const CombatTracker = ({
   gold,
@@ -40,7 +39,9 @@ const CombatTracker = ({
   const [remainingBossTime, setRemainingBossTime] = useState(30);
   const [isTraining, setIsTraining] = useState(false);
 
-  const equipmentKeys = ["head", "overall", "weapon", "seconday", "shoes"];
+  const [showPopup, setShowPopup] = useState(false);
+
+  const equipmentKeys = ["head", "overall", "weapon", "secondary", "shoes"];
   const [currentEquipmentIndex, setCurrentEquipmentIndex] = useState(0);
 
   const { contextSafe: healthBarContextSafe } = useGSAP({ scope: healthBar });
@@ -89,6 +90,15 @@ const CombatTracker = ({
     setRemainingBossTime(30);
   };
 
+  const awardGold = () => {
+    if (isEnemyShiny) {
+      setGold(gold + 1.34 ** stage * 12 * goldMultiplier);
+      setIsEnemyShiny(false);
+    } else {
+      setGold(gold + 1.33 ** stage * 3 * goldMultiplier);
+    }
+  };
+
   useEffect(() => {
     if (currentEnemy.health <= 0) {
       toggleOnEnemyDeath((prev: boolean) => !prev);
@@ -98,7 +108,7 @@ const CombatTracker = ({
         if (!isTraining) {
           setGold(gold + 1.35 ** stage * 24 * goldMultiplier);
           setCurrentEnemyType("normal");
-          setCurrentEnemyNumber(1);
+          setCurrentEnemyNumber(0);
           setStage(stage + 1);
           setCrystal((prev: number) => prev + Math.ceil(Math.random() * 3));
 
@@ -124,16 +134,18 @@ const CombatTracker = ({
             ownedEquipments[equipType].push(randomEquip);
 
             setCurrentEquipmentIndex((prev: number) => (prev + 1) % 5);
-          }
-        } else nextEnemy();
-      } else {
-        if (isEnemyShiny) {
-          setGold(gold + 1.34 ** stage * 12 * goldMultiplier);
-          setIsEnemyShiny(false);
-        } else {
-          setGold(gold + 1.33 ** stage * 3 * goldMultiplier);
-        }
 
+            setShowPopup(true);
+            setTimeout(() => {
+              setShowPopup(false);
+            }, 2500);
+          }
+        } else {
+          nextEnemy();
+          awardGold();
+        }
+      } else {
+        awardGold();
         setCurrentEnemyNumber((prev: number) => {
           const newEnemyNumber = prev + 1;
 
@@ -228,6 +240,8 @@ const CombatTracker = ({
       ) : (
         <div className="mb-12">_</div>
       )}
+
+      {showPopup && <Popup type={"top"} />}
     </>
   );
 };

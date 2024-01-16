@@ -63,9 +63,19 @@ export const equipments: Record<EquipmentPieceName, EquipmentPiece[]> = {
 };
 
 export const ownedEquipments: Record<EquipmentPieceName, EquipmentPiece[]> = {
-  head: [{ name: "Basic Helmet", base: 1.0, scaled: 1, equipped: true }],
-  overall: [{ name: "Basic Overall", base: 1.0, scaled: 1, equipped: true }],
-  weapon: [{ name: "Basic Weapon", base: 1.0, scaled: 1, equipped: true }],
+  head: [
+    { name: "Basic Helmet", base: 1.0, scaled: 1, equipped: true },
+    { name: "Helmet4", base: 1.3, scaled: 1.2, equipped: false },
+    { name: "Helmet5", base: 1.5, scaled: 1.5, equipped: false },
+  ],
+  overall: [
+    { name: "Basic Overall", base: 1.0, scaled: 1, equipped: true },
+    { name: "Armor1", base: 1.4, scaled: 1.35, equipped: false },
+  ],
+  weapon: [
+    { name: "Basic Weapon", base: 1.0, scaled: 1, equipped: true },
+    { name: "Sword2", base: 1.1, scaled: 1.3, equipped: false },
+  ],
   secondary: [
     { name: "Basic Secondary", base: 1.0, scaled: 1, equipped: true },
   ],

@@ -8,6 +8,8 @@ import {
 } from "@/constants/equipment";
 import React, { useState } from "react";
 import { Button } from "../ui/button";
+import { PushNotification } from "../Notification";
+import { notifications } from "@/constants/notifications";
 
 const Equipment = ({
   setGoldMultiplier,
@@ -26,9 +28,13 @@ const Equipment = ({
     Object.keys(ownedEquipments).forEach((equipmentType) => {
       ownedEquipments[equipmentType as EquipmentPieceName].forEach(
         (equipment) => {
+          console.log(equipped[equipType].name, equipment.name, equip.name);
+
           if (equipment.name === equip.name) {
             equipment.equipped = true;
-          } else equipment.equipped = false;
+          } else if (equipType === equipmentType) {
+            equipment.equipped = false;
+          }
         }
       );
     });
@@ -83,6 +89,12 @@ const Equipment = ({
                   onClick={() => setEquipmentCategory(equipment)}
                 >
                   {equipment}
+                  <PushNotification
+                    name={equipment}
+                    categoryNotifications={notifications.filter(
+                      (n) => n === equipment
+                    )}
+                  />
                 </div>
               );
             })}

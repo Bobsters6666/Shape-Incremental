@@ -26,7 +26,7 @@ export const helpers: Helper[] = [
     show: true,
     notified: false,
     icon: "./shapes/companions/asset.svg",
-    powerUps: ["2xS", "2xS", "2xS", "3xS", ".05xG", ".05xM", "3xS", "3xS"],
+    powerUps: [".05xG", "2xS", "2xS", "3xS", ".05xG", ".05xM", "3xS", "3xS"],
   },
   {
     name: "Sensitive Square",
@@ -82,7 +82,7 @@ export const helpers: Helper[] = [
     show: false,
     notified: false,
     icon: "./shapes/companions/asset4.svg",
-    powerUps: [".05xM", "10xM", "3xS", "4xS", "2xS", ".10xG", ".05xG", "4xS"],
+    powerUps: [".05xM", ".10xM", "3xS", "4xS", "2xS", ".10xG", ".05xG", "4xS"],
   },
   {
     name: "Tricky Trapezium",
@@ -144,7 +144,7 @@ export const helpers: Helper[] = [
     name: "Starry Star",
     level: 0,
     magic: 0,
-    magicIncrease: 7_800_000_000,
+    magicIncrease: 7_800_000_000_000,
     scaling: 1.089,
     cost: 248_000_000_000_000,
     costScaling: 1.138,
