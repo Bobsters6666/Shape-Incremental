@@ -41,13 +41,13 @@ const AchievementPopup = ({
   );
 };
 
-interface AchievementsTrackerProps {
-  gold: number;
-}
-
 type AchievementKey = keyof typeof achievements;
 
-const AchievementsTracker = ({ gold }: AchievementsTrackerProps) => {
+const AchievementsTracker = ({
+  gold,
+  achievementPoints,
+  setAchievementPoints,
+}: any) => {
   const [visibleAchievement, setVisibleAchievement] = useState<string | null>(
     null
   );
@@ -56,6 +56,7 @@ const AchievementsTracker = ({ gold }: AchievementsTrackerProps) => {
     const interval = setInterval(() => {
       if (hero.level >= 10 && !achievements.lv10.completed) {
         achievements.lv10.completed = true;
+        setAchievementPoints(achievementPoints + achievements.lv10.points);
         setVisibleAchievement("lv10");
         setTimeout(() => {
           setVisibleAchievement(null);
@@ -64,6 +65,7 @@ const AchievementsTracker = ({ gold }: AchievementsTrackerProps) => {
 
       if (hero.level >= 50 && !achievements.lv50.completed) {
         achievements.lv50.completed = true;
+        setAchievementPoints(achievementPoints + achievements.lv50.points);
         setVisibleAchievement("lv50");
         setTimeout(() => {
           setVisibleAchievement(null);
@@ -72,6 +74,7 @@ const AchievementsTracker = ({ gold }: AchievementsTrackerProps) => {
 
       if (hero.level >= 100 && !achievements.lv100.completed) {
         achievements.lv100.completed = true;
+        setAchievementPoints(achievementPoints + achievements.lv100.points);
         setVisibleAchievement("lv100");
         setTimeout(() => {
           setVisibleAchievement(null);
@@ -80,6 +83,7 @@ const AchievementsTracker = ({ gold }: AchievementsTrackerProps) => {
 
       if (hero.level >= 250 && !achievements.lv250.completed) {
         achievements.lv250.completed = true;
+        setAchievementPoints(achievementPoints + achievements.lv250.points);
         setVisibleAchievement("lv250");
         setTimeout(() => {
           setVisibleAchievement(null);
@@ -88,6 +92,7 @@ const AchievementsTracker = ({ gold }: AchievementsTrackerProps) => {
 
       if (hero.level >= 500 && !achievements.lv500.completed) {
         achievements.lv500.completed = true;
+        setAchievementPoints(achievementPoints + achievements.lv500.points);
         setVisibleAchievement("lv500");
         setTimeout(() => {
           setVisibleAchievement(null);
@@ -96,6 +101,7 @@ const AchievementsTracker = ({ gold }: AchievementsTrackerProps) => {
 
       if (hero.level >= 1000 && !achievements.lv1000.completed) {
         achievements.lv1000.completed = true;
+        setAchievementPoints(achievementPoints + achievements.lv1000.points);
         setVisibleAchievement("lv1000");
         setTimeout(() => {
           setVisibleAchievement(null);
@@ -104,6 +110,7 @@ const AchievementsTracker = ({ gold }: AchievementsTrackerProps) => {
 
       if (gold >= 1000 && !achievements["1kG"].completed) {
         achievements["1kG"].completed = true;
+        setAchievementPoints(achievementPoints + achievements["1kG"].points);
         setVisibleAchievement("1kG");
         setTimeout(() => {
           setVisibleAchievement(null);
@@ -112,6 +119,7 @@ const AchievementsTracker = ({ gold }: AchievementsTrackerProps) => {
 
       if (gold >= 1000000 && !achievements["1mG"].completed) {
         achievements["1mG"].completed = true;
+        setAchievementPoints(achievementPoints + achievements["1mG"].points);
         setVisibleAchievement("1mG");
         setTimeout(() => {
           setVisibleAchievement(null);
@@ -120,6 +128,7 @@ const AchievementsTracker = ({ gold }: AchievementsTrackerProps) => {
 
       if (gold >= 1000000000 && !achievements["1bG"].completed) {
         achievements["1bG"].completed = true;
+        setAchievementPoints(achievementPoints + achievements["1bG"].points);
         setVisibleAchievement("1bG");
         setTimeout(() => {
           setVisibleAchievement(null);
@@ -128,6 +137,7 @@ const AchievementsTracker = ({ gold }: AchievementsTrackerProps) => {
 
       if (gold >= 1_000_000_000_000 && !achievements["1tG"].completed) {
         achievements["1tG"].completed = true;
+        setAchievementPoints(achievementPoints + achievements["1tG"].points);
         setVisibleAchievement("1tG");
         setTimeout(() => {
           setVisibleAchievement(null);

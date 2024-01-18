@@ -67,3 +67,30 @@ export const achievements: Record<string, Achievements> = {
     completed: false,
   },
 };
+
+export const upgrades = [
+  {
+    name: "attack",
+    point: 0,
+    pointText: 0,
+    multiplier: 1,
+    multiplierText: 1,
+    cost: 10,
+  },
+  {
+    name: "magic",
+    point: 0,
+    pointText: 0,
+    multiplier: 1,
+    multiplierText: 1,
+    cost: 10,
+  },
+  {
+    name: "gold",
+    point: 0,
+    pointText: 0,
+    multiplier: 1,
+    multiplierText: 1,
+    cost: 10,
+  },
+];

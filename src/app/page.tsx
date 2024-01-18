@@ -40,7 +40,7 @@ export default function Home() {
   const [gold, setGold] = useState(10000);
   const [crystal, setCrystal] = useState(10);
   const [angel, setAngel] = useState(0);
-  const [achievementPoints, setAchievementPoints] = useState(0);
+  const [achievementPoints, setAchievementPoints] = useState(1000);
   const [stage, setStage] = useState(1);
 
   const [critChance, setCritChance] = useState(5);
@@ -163,6 +163,8 @@ export default function Home() {
                       goldMultiplier={goldMultiplier}
                       setGold={setGold}
                       crystal={crystal}
+                      achievementPoints={achievementPoints}
+                      setAchievementPoints={setAchievementPoints}
                       setCrystal={setCrystal}
                       setGoldMultiplier={setGoldMultiplier}
                       setAttackMultiplier={setAttackMultiplier}
@@ -291,7 +293,11 @@ export default function Home() {
         />
       </section>
 
-      <AchievementsTracker gold={gold} />
+      <AchievementsTracker
+        gold={gold}
+        achievementPoints={achievementPoints}
+        setAchievementPoints={setAchievementPoints}
+      />
 
       <Saver
         attack={attack}

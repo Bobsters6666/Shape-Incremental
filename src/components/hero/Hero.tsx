@@ -27,6 +27,8 @@ const Hero = ({
   attack,
   stage,
   goldMultiplier,
+  achievementPoints,
+  setAchievementPoints,
   setGold,
   setCrystal,
   setAttack,
@@ -40,7 +42,6 @@ const Hero = ({
   const levelUpInfoP = useRef<HTMLParagraphElement>(null);
 
   const [heroCategory, setHeroCategory] = useState("main");
-  const [achivementPoints, setAchievementPoints] = useState(0);
 
   const [numberOfUpgrades, setNumberOfUpgrades] = useState(1);
 
@@ -234,8 +235,11 @@ const Hero = ({
           case "achievements":
             return (
               <Achievements
-                achivementPoints={achivementPoints}
+                achievementPoints={achievementPoints}
                 setAchievementPoints={setAchievementPoints}
+                setGoldMultiplier={setGoldMultiplier}
+                setAttackMultiplier={setAttackMultiplier}
+                setMagicMultiplier={setMagicMultiplier}
               />
             );
           default:
