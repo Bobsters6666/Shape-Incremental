@@ -23,6 +23,7 @@ import Shop from "@/components/Shop";
 import Prestige from "@/components/progress/Prestige";
 import { Notification, PushNotification } from "@/components/Notification";
 import { notifications } from "@/constants/notifications";
+import IntervalReward from "@/components/IntervalReward";
 
 interface Animation {
   id: number;
@@ -37,10 +38,10 @@ export default function Home() {
   const [attack, setAttack] = useState(1);
   const [magic, setMagic] = useState(0);
 
-  const [gold, setGold] = useState(10000);
+  const [gold, setGold] = useState(1);
   const [crystal, setCrystal] = useState(10);
   const [angel, setAngel] = useState(0);
-  const [achievementPoints, setAchievementPoints] = useState(1000);
+  const [achievementPoints, setAchievementPoints] = useState(0);
   const [stage, setStage] = useState(1);
 
   const [critChance, setCritChance] = useState(5);
@@ -48,7 +49,7 @@ export default function Home() {
 
   const [prestige, setPrestige] = useState(0);
 
-  const [maxEnemyNumber, setMaxEnemyNumber] = useState(5);
+  const [maxEnemyNumber, setMaxEnemyNumber] = useState(10);
   const [currentEnemyNumber, setCurrentEnemyNumber] = useState(1);
   const [currentEnemyIndex, setCurrentEnemyIndex] = useState(0);
   const [currentBossIndex, setCurrentBossIndex] = useState(0);
@@ -210,7 +211,13 @@ export default function Home() {
                     />
                   );
                 case "Shop":
-                  return <Shop />;
+                  return (
+                    <Shop
+                      crystal={crystal}
+                      setCrystal={setCrystal}
+                      stage={stage}
+                    />
+                  );
                 default:
                   return <></>;
               }
@@ -297,6 +304,7 @@ export default function Home() {
         gold={gold}
         achievementPoints={achievementPoints}
         setAchievementPoints={setAchievementPoints}
+        stage={stage}
       />
 
       <Saver
@@ -343,6 +351,7 @@ export default function Home() {
       />
 
       <Notification gold={gold} />
+      <IntervalReward setCrystal={setCrystal} />
 
       {activeAnimations.map((animation) => (
         <ClickingAnimation

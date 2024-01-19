@@ -5,7 +5,7 @@ import { companions } from "@/constants/companions";
 import { achievements } from "@/constants/achievements";
 import { useSession } from "next-auth/react";
 import { artifacts, newArtifact } from "@/constants/artifacts";
-import { equipped, ownedEquipments } from "@/constants/equipment";
+import { equipGranted, equipped, ownedEquipments } from "@/constants/equipment";
 import { setCookie, getCookie } from "cookies-next";
 
 const Saver = ({
@@ -56,6 +56,7 @@ const Saver = ({
       localStorage.setItem("newArtifact", JSON.stringify(newArtifact));
       localStorage.setItem("ownedEquipments", JSON.stringify(ownedEquipments));
       localStorage.setItem("equipped", JSON.stringify(equipped));
+      localStorage.setItem("equipGranted", JSON.stringify(equipGranted));
 
       // saving default values (for prestige purposes)
 
@@ -64,11 +65,6 @@ const Saver = ({
       localStorage.setItem("defaultCompanions", JSON.stringify(companions));
       localStorage.setItem("defaultArtifacts", JSON.stringify(artifacts));
       localStorage.setItem("defaultNewArtifact", JSON.stringify(newArtifact));
-      localStorage.setItem(
-        "defaultOwnedEquipments",
-        JSON.stringify(ownedEquipments)
-      );
-      localStorage.setItem("defaultEquipped", JSON.stringify(equipped));
 
       setCookie("stage", stage);
       setCookie("prestige", prestige);

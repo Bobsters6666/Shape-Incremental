@@ -21,7 +21,7 @@ export const companions = [
     faces: 6,
     vertex: 8,
     critChanceIncrease: 0.5,
-    critChanceScaling: 1.4,
+    critChanceScaling: 1.12,
     critDamageIncrease: 2.3,
     critDamageScaling: 1.5,
     goldCost: 500,

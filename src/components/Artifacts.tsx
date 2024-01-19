@@ -1,9 +1,7 @@
-import { artifacts, newArtifact } from "@/constants/artifacts";
+import { ArtifactKey, artifacts, newArtifact } from "@/constants/artifacts";
 import { nf } from "@/utils/utils";
 import React from "react";
 import { Artifact } from "@/constants/artifacts";
-
-type ArtifactKey = keyof typeof artifacts;
 
 const Artifacts = ({
   angel,
@@ -28,9 +26,14 @@ const Artifacts = ({
 
   const unlockArtifact = () => {
     if (angel >= newArtifact.cost) {
-      const lockedArtifacts = Object.keys(artifacts).filter(
-        (artifact) => artifacts[artifact as ArtifactKey].unlocked === false
-      );
+      const lockedArtifacts = Object.keys(artifacts).filter((artifact) => {
+        const a = artifacts[artifact as ArtifactKey];
+        return (
+          a.unlocked === false &&
+          (a.rarity === "uncommon" || a.rarity === "rare")
+        );
+      });
+
       const index = Math.floor(Math.random() * lockedArtifacts.length);
       const key = lockedArtifacts[index] as ArtifactKey;
 
@@ -91,6 +94,10 @@ const Artifacts = ({
           </div>
         );
       })}
+
+      <p className="text-xs font-semibold opacity-60 mt-4">
+        Prestige unlocks after stage 75
+      </p>
     </div>
   );
 };

@@ -21,7 +21,7 @@ export const achievements: Record<string, Achievements> = {
   lv100: {
     name: "Level 100!",
     description: "Reach hero level 100",
-    points: 10,
+    points: 5,
     completed: false,
   },
   lv250: {
@@ -33,7 +33,7 @@ export const achievements: Record<string, Achievements> = {
   lv500: {
     name: "Level 500!",
     description: "Reach hero level 500",
-    points: 15,
+    points: 10,
     completed: false,
   },
   lv1000: {
@@ -51,7 +51,7 @@ export const achievements: Record<string, Achievements> = {
   "1mG": {
     name: "Money Money II",
     description: "Have 1m+ gold in hand",
-    points: 10,
+    points: 5,
     completed: false,
   },
   "1bG": {
@@ -64,6 +64,30 @@ export const achievements: Record<string, Achievements> = {
     name: "Money Money IV",
     description: "Have 1t+ gold in hand",
     points: 15,
+    completed: false,
+  },
+  stage25: {
+    name: "Reach Stage 25!",
+    description: "Reach stage 25",
+    points: 5,
+    completed: false,
+  },
+  stage50: {
+    name: "Reach Stage 50!",
+    description: "Reach stage 50",
+    points: 5,
+    completed: false,
+  },
+  stage100: {
+    name: "Reach Stage 100!",
+    description: "Reach stage 100",
+    points: 5,
+    completed: false,
+  },
+  stage200: {
+    name: "Reach Stage 200!",
+    description: "Reach stage 200",
+    points: 10,
     completed: false,
   },
 };

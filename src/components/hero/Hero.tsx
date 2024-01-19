@@ -142,8 +142,6 @@ const Hero = ({
     let index = hero.intervals.indexOf(hero.level + levelsToGo - 1);
     let index2 = hero.intervals.indexOf(hero.level + levelsToGo);
 
-    console.log(index, index2, hero.level + levelsToGo);
-
     if (index === -1 && value !== "1") {
       onHeroUpgrade(true);
     } else onHeroUpgrade();
@@ -240,6 +238,7 @@ const Hero = ({
                 setGoldMultiplier={setGoldMultiplier}
                 setAttackMultiplier={setAttackMultiplier}
                 setMagicMultiplier={setMagicMultiplier}
+                stage={stage}
               />
             );
           default:

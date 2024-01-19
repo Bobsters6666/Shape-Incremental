@@ -29,10 +29,6 @@ const Options = [
     value: "100",
     label: "100",
   },
-  {
-    value: "max",
-    label: "max",
-  },
 ];
 
 const XSelector = ({ value, setValue }: any) => {

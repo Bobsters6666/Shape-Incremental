@@ -8,16 +8,7 @@ import { popUp } from "@/utils/animations";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 
-interface AchievementPopupProps {
-  isVisible: boolean;
-  onHide: () => void;
-}
-
-const AchievementPopup = ({
-  isVisible,
-  onHide,
-  achievement,
-}: AchievementPopupProps & { achievement: Achievements }) => {
+const AchievementPopup = ({ isVisible, onHide, achievement }: any) => {
   return (
     <>
       {isVisible && (
@@ -47,6 +38,7 @@ const AchievementsTracker = ({
   gold,
   achievementPoints,
   setAchievementPoints,
+  stage,
 }: any) => {
   const [visibleAchievement, setVisibleAchievement] = useState<string | null>(
     null
@@ -103,6 +95,42 @@ const AchievementsTracker = ({
         achievements.lv1000.completed = true;
         setAchievementPoints(achievementPoints + achievements.lv1000.points);
         setVisibleAchievement("lv1000");
+        setTimeout(() => {
+          setVisibleAchievement(null);
+        }, 5000);
+      }
+
+      if (stage >= 25 && !achievements.stage25.completed) {
+        achievements.stage25.completed = true;
+        setAchievementPoints(achievementPoints + achievements.stage25.points);
+        setVisibleAchievement("stage25");
+        setTimeout(() => {
+          setVisibleAchievement(null);
+        }, 5000);
+      }
+
+      if (stage >= 50 && !achievements.stage50.completed) {
+        achievements.stage50.completed = true;
+        setAchievementPoints(achievementPoints + achievements.stage50.points);
+        setVisibleAchievement("stage50");
+        setTimeout(() => {
+          setVisibleAchievement(null);
+        }, 5000);
+      }
+
+      if (stage >= 100 && !achievements.stage100.completed) {
+        achievements.stage100.completed = true;
+        setAchievementPoints(achievementPoints + achievements.stage100.points);
+        setVisibleAchievement("stage100");
+        setTimeout(() => {
+          setVisibleAchievement(null);
+        }, 5000);
+      }
+
+      if (stage >= 200 && !achievements.stage200.completed) {
+        achievements.stage200.completed = true;
+        setAchievementPoints(achievementPoints + achievements.stage200.points);
+        setVisibleAchievement("stage200");
         setTimeout(() => {
           setVisibleAchievement(null);
         }, 5000);

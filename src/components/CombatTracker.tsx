@@ -6,6 +6,8 @@ import { useGSAP } from "@gsap/react";
 import { nf } from "@/utils/utils";
 import {
   EquipmentPieceName,
+  equipGranted,
+  equipmentKeys,
   equipments,
   ownedEquipments,
 } from "@/constants/equipment";
@@ -41,7 +43,6 @@ const CombatTracker = ({
 
   const [showPopup, setShowPopup] = useState(false);
 
-  const equipmentKeys = ["head", "overall", "weapon", "secondary", "shoes"];
   const [currentEquipmentIndex, setCurrentEquipmentIndex] = useState(0);
 
   const { contextSafe: healthBarContextSafe } = useGSAP({ scope: healthBar });
@@ -114,24 +115,30 @@ const CombatTracker = ({
 
           // if shape swap intervals reached => swap to next shape
           if (parseFloat(stage) % 5 === 0) {
-            const newIndex =
-              (shapes.indexOf(currentEnemyShape) + 1) % shapes.length;
-            setCurrentEnemyShape(shapes[newIndex]);
+            if (equipGranted.indexOf(stage)) {
+              const newIndex =
+                (shapes.indexOf(currentEnemyShape) + 1) % shapes.length;
+              setCurrentEnemyShape(shapes[newIndex]);
 
-            // boss equip drop
-            const equipType = equipmentKeys[
-              currentEquipmentIndex
-            ] as EquipmentPieceName;
+              // boss equip drop
+              const equipType = equipmentKeys[
+                currentEquipmentIndex
+              ] as EquipmentPieceName;
 
-            const randomEquip =
-              equipments[equipType][
-                Math.floor(Math.random() * equipments[equipType].length)
-              ];
+              const randomEquip =
+                equipments[equipType][
+                  Math.floor(Math.random() * equipments[equipType].length)
+                ];
 
-            randomEquip.scaled =
-              randomEquip.base * (1 + randomEquip.scaled / 60);
+              randomEquip.scaled =
+                (randomEquip.base * (1 + randomEquip.scaled / 60)) **
+                Math.sqrt(stage);
 
-            ownedEquipments[equipType].push(randomEquip);
+              ownedEquipments[equipType].push(randomEquip);
+            }
+
+            // add stage to array so player don't get awarded another equip when beating this level
+            equipGranted.push(stage);
 
             setCurrentEquipmentIndex((prev: number) => (prev + 1) % 5);
 

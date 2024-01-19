@@ -4,7 +4,7 @@ import { helpers } from "@/constants/helpers";
 import { companions } from "@/constants/companions";
 import { achievements } from "@/constants/achievements";
 import { artifacts, newArtifact } from "@/constants/artifacts";
-import { equipped, ownedEquipments } from "@/constants/equipment";
+import { equipGranted, equipped, ownedEquipments } from "@/constants/equipment";
 
 const Loader = ({
   setAttack,
@@ -66,6 +66,11 @@ const Loader = ({
         JSON.parse(localStorage.getItem("ownedEquipments")!)
       );
       Object.assign(equipped, JSON.parse(localStorage.getItem("equipped")!));
+      Object.assign(
+        equipGranted,
+        JSON.parse(localStorage.getItem("equipGranted")!)
+      );
+
       setAttack(parseFloat(localStorage.getItem("attack")!));
       setMagic(parseFloat(localStorage.getItem("magic")!));
       setGold(parseFloat(localStorage.getItem("gold")!));
@@ -88,7 +93,7 @@ const Loader = ({
       );
     };
 
-    // load();
+    load();
   }, []);
 
   return <></>;

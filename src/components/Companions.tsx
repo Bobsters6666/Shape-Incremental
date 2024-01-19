@@ -85,6 +85,10 @@ const Companions = ({
           </div>
         </div>
       ))}
+
+      <p className="text-xs font-semibold opacity-60">
+        New companion unlocks at stage 150
+      </p>
     </div>
   );
 };

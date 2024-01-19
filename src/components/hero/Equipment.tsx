@@ -28,8 +28,6 @@ const Equipment = ({
     Object.keys(ownedEquipments).forEach((equipmentType) => {
       ownedEquipments[equipmentType as EquipmentPieceName].forEach(
         (equipment) => {
-          console.log(equipped[equipType].name, equipment.name, equip.name);
-
           if (equipment.name === equip.name) {
             equipment.equipped = true;
           } else if (equipType === equipmentType) {

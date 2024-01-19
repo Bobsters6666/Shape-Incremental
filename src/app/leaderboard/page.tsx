@@ -20,15 +20,33 @@ export default async function Leaderboard() {
   }));
 
   if (session) {
-    const user = await prisma.user.update({
+    const user = await prisma.user.findFirst({
       where: {
         email: session.user?.email!,
       },
-      data: {
-        stage: parseFloat(getCookie("stage", { cookies })!),
-        prestige: parseFloat(getCookie("prestige", { cookies })!),
-      },
     });
+
+    // only update stage if stored value is larger than user's existing stage.
+    if (user!.stage < parseFloat(getCookie("stage", { cookies })!)) {
+      const user = await prisma.user.update({
+        where: {
+          email: session.user?.email!,
+        },
+        data: {
+          stage: parseFloat(getCookie("stage", { cookies })!),
+          prestige: parseFloat(getCookie("prestige", { cookies })!),
+        },
+      });
+    } else {
+      const user = await prisma.user.update({
+        where: {
+          email: session.user?.email!,
+        },
+        data: {
+          prestige: parseFloat(getCookie("prestige", { cookies })!),
+        },
+      });
+    }
   }
 
   return (

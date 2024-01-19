@@ -10,6 +10,21 @@ type Change =
 
 const logs = [
   {
+    version: 1.04,
+    changes: [
+      {
+        "New functionality in shop page": [
+          "Can use gem to open a secret chest containing equips and artifacts or artifact pieces",
+          "Can view artifacts piece progress in inventory",
+        ],
+      },
+      "Added bulk upgrade for helpers",
+      "Added new epic and legendary tier artifacts",
+      "Added 5 more equipments in each category",
+      "Every 3 min a button will appear on the screen that will award player with a random amount of crystal",
+    ],
+  },
+  {
     version: 1.03,
     changes: [
       {
@@ -66,7 +81,7 @@ const page = () => {
                 // Otherwise just simply return the list item
                 else {
                   return (
-                    <li className="ml-4" key={change}>
+                    <li className="ml-4 font-semibold opacity-80" key={change}>
                       {change}
                     </li>
                   );

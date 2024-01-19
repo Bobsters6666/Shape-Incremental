@@ -6,6 +6,15 @@ import { companions } from "@/constants/companions";
 import { artifacts, newArtifact } from "@/constants/artifacts";
 import { equipped, ownedEquipments } from "@/constants/equipment";
 
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+
 const Prestige = ({
   setAttack,
   setMagic,
@@ -19,8 +28,10 @@ const Prestige = ({
   setCurrentEnemy,
   setCurrentEnemyNumber,
 }: any) => {
+  const angelGranted = Math.ceil((stage - 75) / 3);
+
   const prestige = () => {
-    setAngel((prev: number) => prev + Math.ceil((stage - 50) / 3));
+    setAngel((prev: number) => prev + angelGranted);
 
     setAttack(1);
     setMagic(0);
@@ -46,18 +57,37 @@ const Prestige = ({
       newArtifact,
       JSON.parse(localStorage.getItem("defaultNewArtifact")!)
     );
-    Object.assign(
-      ownedEquipments,
-      JSON.parse(localStorage.getItem("defaultOwnedEquipments")!)
-    );
-    Object.assign(
-      equipped,
-      JSON.parse(localStorage.getItem("defaultEquipped")!)
-    );
   };
 
   return (
-    <>{stage > 50 && <Button onClick={() => prestige()}>Prestige</Button>}</>
+    <>
+      {stage > 75 && (
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button className="block mt-4">Prestige</Button>
+          </DialogTrigger>
+          <DialogContent className="bg-white">
+            <DialogHeader>
+              <DialogTitle className="mb-10 text-lg text-center">
+                Are you sure you want to prestige, everything will reset (except
+                permanent stat bonuses)
+              </DialogTitle>
+              <DialogDescription className=" text-center text-lg">
+                <p>
+                  Angels Received upon Prestige: <strong>{angelGranted}</strong>
+                </p>
+                <Button
+                  className="w-fit self-center mt-12"
+                  onClick={() => prestige()}
+                >
+                  Confirm
+                </Button>
+              </DialogDescription>
+            </DialogHeader>
+          </DialogContent>
+        </Dialog>
+      )}
+    </>
   );
 };
 

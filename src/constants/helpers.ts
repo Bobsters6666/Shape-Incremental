@@ -54,7 +54,7 @@ export const helpers: Helper[] = [
     show: false,
     notified: false,
     icon: "./shapes/companions/asset2.svg",
-    powerUps: ["2xS", ".05xG", "3xS", "3xS", "10xG", "2xS", "3xS", "4xS"],
+    powerUps: ["2xS", ".05xG", "3xS", "3xS", ".10xG", "2xS", "3xS", "4xS"],
   },
   {
     name: "Sentinel Squaroid",
